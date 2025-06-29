@@ -1,6 +1,11 @@
 {
   "buildCommand": "cd frontend && npm run build",
-  "installCommand": "cd frontend && npm install --legacy-peer-deps",
+  "installCommand": "cd frontend && rm -f package-lock.json && npm install --legacy-peer-deps",
   "framework": "nextjs",
-  "outputDirectory": "frontend/.next"
+  "outputDirectory": "frontend/.next",
+  "functions": {
+    "frontend/app/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }
