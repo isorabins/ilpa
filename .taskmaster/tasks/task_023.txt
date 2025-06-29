@@ -1,0 +1,77 @@
+# Task ID: 23
+# Title: Implement Planning & Domain API Endpoints
+# Status: pending
+# Dependencies: 4, 7, 8, 10
+# Priority: medium
+# Description: Create API endpoints for weekly planning sessions, domain agent interactions, and file upload processing with proper validation and rate limiting.
+# Details:
+1. Create `src/api/routers/planning.py` for planning session endpoints:
+   - Implement `/api/planning/start` endpoint to initiate a new planning session
+   - Create `/api/planning/message` endpoint for interactive planning dialogue
+   - Add `/api/planning/finalize` endpoint to complete and save plans
+   - Implement `/api/planning/history` to retrieve past planning sessions
+
+2. Create `src/api/routers/domains.py` for domain agent interactions:
+   - Implement `/api/domains/health` endpoint for health domain insights
+   - Create `/api/domains/business` endpoint for business domain insights
+   - Add `/api/domains/creative` endpoint for creative domain insights
+   - Implement `/api/domains/travel` endpoint for travel domain insights
+   - Create `/api/domains/relationships` endpoint for relationship domain insights
+   - Add `/api/domains/reports` endpoint to generate domain-specific reports
+
+3. Enhance `src/api/routers/uploads.py` with additional functionality:
+   - Implement file validation middleware (size, type, content)
+   - Add rate limiting using FastAPI middleware
+   - Create endpoint for checking upload processing status
+   - Implement endpoint for retrieving processed file insights
+
+4. Implement request validation using Pydantic models:
+   - Create `src/api/models/planning.py` for planning request/response models
+   - Implement `src/api/models/domains.py` for domain request/response models
+   - Add validation for all request parameters and payload structures
+
+5. Add authentication and security features:
+   - Ensure all endpoints require valid authentication
+   - Implement user-specific data access controls
+   - Add logging for all API requests for auditing purposes
+
+6. Implement error handling and response standardization:
+   - Create consistent error response format
+   - Add appropriate HTTP status codes for different scenarios
+   - Implement detailed error messages for debugging
+
+7. Add documentation using FastAPI's built-in Swagger UI:
+   - Document all endpoints with clear descriptions
+   - Add example requests and responses
+   - Document authentication requirements
+
+# Test Strategy:
+1. Unit test each API endpoint:
+   - Test planning endpoints with mock WeeklyPlanningAgent responses
+   - Verify domain endpoints correctly route to appropriate domain agents
+   - Test file upload enhancements with various file types and sizes
+
+2. Test authentication and authorization:
+   - Verify endpoints reject unauthenticated requests
+   - Test user-specific data access controls
+   - Ensure rate limiting correctly restricts excessive requests
+
+3. Test request validation:
+   - Send invalid requests to each endpoint and verify appropriate error responses
+   - Test boundary conditions (empty payloads, maximum sizes, etc.)
+   - Verify all required fields are properly validated
+
+4. Integration testing:
+   - Test planning workflow from start to finalization
+   - Verify domain insights are correctly retrieved from domain agents
+   - Test file upload processing end-to-end
+
+5. Performance testing:
+   - Measure response times under various loads
+   - Test rate limiting behavior under high traffic
+   - Verify system stability with concurrent requests
+
+6. Documentation verification:
+   - Ensure all endpoints are properly documented
+   - Verify example requests work as documented
+   - Test API through Swagger UI to confirm functionality

@@ -1,0 +1,84 @@
+# Task ID: 16
+# Title: Implement F@4 Memory System Integration
+# Status: pending
+# Dependencies: 3, 5, 9
+# Priority: high
+# Description: Create the core memory system using F@4 patterns including conversations table, memory table, buffer management, and nightly summarization integration for ILPA's multi-agent architecture. Reference specific F@4 implementations from simple_memory.py, memory_bank.py, and supabase schema migrations.
+# Details:
+1. Create `src/memory/memory_system.py` based on F@4's `fridays-at-four/src/simple_memory.py` (lines 1-300) patterns
+2. Implement MemorySystem class with methods for storing and retrieving conversations following F@4's SimpleMemory class
+3. Create database schema for conversations table (user_id, agent_id, timestamp, role, content) referencing F@4's `supabase/migrations/` schema patterns
+4. Create database schema for memory table (user_id, agent_id, timestamp, content, source_type) based on F@4's memory table structure
+5. Implement buffer management for recent conversations (100-message rolling window) as in F@4's simple_memory.py
+6. Add methods for retrieving relevant memories based on keyword search using F@4's simple_memory.py implementation
+7. Create integration points with the nightly summarizer for long-term memory processing following F@4 patterns
+8. Implement memory context injection for agent prompts using F@4's context formatting approach
+9. Add support for multi-agent architecture (different memory contexts for different agents)
+10. Create utility functions for memory serialization and deserialization from F@4's memory_bank.py
+11. Implement memory tagging system for better retrieval based on F@4's approach
+12. Add methods for memory importance scoring to prioritize critical information as in F@4
+13. Create documentation for memory system usage across different agents with F@4 reference examples
+14. Implement memory cleanup and maintenance routines following F@4 patterns
+
+# Test Strategy:
+1. Unit test MemorySystem class methods for storing and retrieving conversations against F@4's implementation
+2. Test buffer management with more than 100 messages to verify rolling window matches F@4 behavior
+3. Verify correct integration with nightly summarizer using F@4's summarization workflow
+4. Test keyword search functionality with various query types against F@4's simple_memory.py implementation
+5. Validate multi-agent memory isolation (agent A cannot access agent B's memories)
+6. Benchmark memory retrieval performance with large datasets compared to F@4 benchmarks
+7. Test memory context injection in agent prompts using F@4's context formatting
+8. Verify memory tagging and importance scoring matches F@4 implementation
+9. Test memory serialization and deserialization against F@4 patterns
+10. Validate memory cleanup routines against F@4 maintenance procedures
+11. Integration test with Life Coach Agent and Domain Agents
+
+# Subtasks:
+## 1. Create MemorySystem class structure [pending]
+### Dependencies: None
+### Description: Create the base MemorySystem class in src/memory/memory_system.py with initialization and core methods based on F@4's simple_memory.py patterns.
+### Details:
+Create src/memory/memory_system.py file with a MemorySystem class that includes initialization parameters for database connection, buffer size, and agent configuration. Reference fridays-at-four/src/simple_memory.py (lines 1-300) for the SimpleMemory class structure. Include method stubs for add_message, get_recent_messages, get_relevant_memories, and add_memory based on F@4's SimpleMemory class implementation. Follow the exact patterns from the F@4 Code Reference Guide.
+
+## 2. Implement database schema for conversations [pending]
+### Dependencies: 16.1
+### Description: Create the database schema for the conversations table to store user-agent interactions.
+### Details:
+Define a database schema for conversations with fields: id (primary key), user_id, agent_id, timestamp, role (user/assistant), content, and metadata (JSON). Reference F@4's supabase/migrations/ schema patterns for conversations table. Implement methods to create the table if it doesn't exist and to validate the schema. Use the exact database connection pattern from F@4's simple_memory.py (lines 50-100).
+
+## 3. Implement database schema for memories [pending]
+### Dependencies: 16.1
+### Description: Create the database schema for the memory table to store processed memories.
+### Details:
+Define a database schema for memories with fields: id (primary key), user_id, agent_id, timestamp, content, source_type (conversation/summary), importance_score, and tags (JSON array). Reference F@4's supabase/migrations/ schema patterns for the memory table. Implement methods to create the table if it doesn't exist and to validate the schema. Follow F@4's memory storage patterns from memory_bank.py.
+
+## 4. Implement conversation storage and retrieval [pending]
+### Dependencies: 16.2
+### Description: Implement methods to store and retrieve conversations from the database.
+### Details:
+Complete the add_message method to store conversations in the database. Implement get_conversation_history to retrieve conversations by user_id and agent_id with optional filtering by timestamp. Include pagination support for large conversation histories. Base implementation on F@4's message storage patterns in simple_memory.py (lines 100-150). Use the exact SQL queries and parameter handling from F@4's implementation.
+
+## 5. Implement buffer management for recent conversations [pending]
+### Dependencies: 16.4
+### Description: Create a rolling buffer system to manage recent conversations for quick access.
+### Details:
+Implement a buffer management system that maintains the most recent N messages (configurable, default 100) in memory for quick access. Add methods to update the buffer when new messages are added and to retrieve the buffer contents. Follow F@4's buffer management approach in simple_memory.py (lines 150-200). Use the same data structures and update mechanisms as F@4.
+
+## 6. Implement memory storage and semantic search [pending]
+### Dependencies: 16.3, 16.5
+### Description: Create methods to store memories and retrieve them using semantic search.
+### Details:
+Implement add_memory method to store processed memories in the database. Create get_relevant_memories method that uses keyword search to find memories relevant to a query. Include parameters for filtering by user_id, agent_id, and source_type. Implement memory importance scoring based on F@4 patterns in simple_memory.py. Use the simple keyword search with .ilike() queries from F@4's implementation.
+
+## 7. Implement nightly summarization integration [pending]
+### Dependencies: 16.6
+### Description: Create integration points with the nightly summarizer for long-term memory processing.
+### Details:
+Implement methods to extract conversations for summarization, process summaries into memories, and store them back in the memory table. Include scheduling hooks for the nightly summarization process. Create a SummaryProcessor class that follows F@4's summarization patterns from simple_memory.py (lines 200-250). Use the exact summarization workflow and memory processing techniques from F@4.
+
+## 8. Implement multi-agent memory context injection [pending]
+### Dependencies: 16.6, 16.7
+### Description: Create a system to inject relevant memories into agent prompts based on agent type and context.
+### Details:
+Implement get_memory_context method that selects and formats relevant memories for inclusion in agent prompts. Add support for different memory context formats based on agent type. Create a tagging system for memories to improve retrieval relevance. Follow F@4's context injection patterns from simple_memory.py (lines 250-300) and memory_bank.py. Use the exact context formatting and memory selection logic from F@4.
+

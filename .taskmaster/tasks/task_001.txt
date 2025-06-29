@@ -1,0 +1,104 @@
+# Task ID: 1
+# Title: Setup Development Environment
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Set up the development environment including cloning F@4 repositories, configuring Vercel, Supabase, and API keys.
+# Details:
+1. Clone F@4 backend and frontend repositories
+2. Study F@4 code patterns (auth flow, memory system, LLM router, chat streaming)
+3. Create Vercel account and install CLI
+4. Set up new Supabase project for ILPA
+5. Obtain and securely store API keys (Anthropic, OpenAI)
+6. Create .env file with all necessary credentials
+7. Run initial Supabase migrations from F@4
+8. Test Vercel deployment and Supabase connection
+9. Create a simple script to verify Claude API functionality
+<info added on 2025-06-29T02:52:44.148Z>
+## Research Findings: F@4 Implementation Strategy for ILPA
+
+### Patterns to Copy Directly
+- LLM Router and Base Agent Patterns from F@4's main.py
+- Database Client User Filtering from simple_memory.py
+- Frontend Project Structure including component organization and WebSocket updates
+
+### Patterns to Adapt
+- Database Models and ORM Integration (use F@4's schema.sql as reference)
+- Agent Role Definitions for multi-agent architecture
+- Frontend Authentication Flow for Supabase integration
+
+### Research-Guided Implementation Needs
+- Multi-Agent Coordination using message passing protocols
+- Long-Term Memory Summarization with provenance tracking
+- Advanced Frontend Features like drag-and-drop planning
+
+### File Path Mapping
+- src/database/client.py: Copy user filtering from F@4
+- src/models/: Adapt from F@4's schema.sql
+- src/agents/base_agent.py: Copy LLM router logic
+- src/agents/nightly_summarizer.py: Research-guided implementation
+- src/auth/middleware.py: Adapt F@4 auth patterns
+- src/frontend/: Copy/adapt F@4 structure
+
+### Implementation Priority
+1. Copy core LLM routing and database patterns first
+2. Adapt authentication and basic agent roles next
+3. Research and implement multi-agent coordination last
+</info added on 2025-06-29T02:52:44.148Z>
+
+# Test Strategy:
+1. Verify successful cloning of F@4 repositories
+2. Confirm Vercel CLI installation and login
+3. Test Supabase connection using CLI
+4. Validate API keys with test requests
+5. Ensure successful Vercel deployment of a basic app
+
+# Subtasks:
+## 1. Clone the Repository [pending]
+### Dependencies: None
+### Description: Clone the project repository from the specified Git provider (e.g., GitHub) to your local machine.
+### Details:
+Acceptance Criteria: Repository is cloned locally, and all files are present. Able to run 'git status' without errors.
+
+## 2. Create Supabase Project [pending]
+### Dependencies: None
+### Description: Set up a new Supabase project via the Supabase dashboard.
+### Details:
+Acceptance Criteria: Supabase project is visible in the dashboard, and project URL and anon key are accessible.
+
+## 3. Configure Vercel Project [pending]
+### Dependencies: 1.1
+### Description: Create and link a new Vercel project, connecting it to the cloned repository.
+### Details:
+Acceptance Criteria: Vercel project is created, repository is linked, and project appears in the Vercel dashboard.
+
+## 4. Manage API Keys and Secrets [pending]
+### Dependencies: 1.2, 1.3
+### Description: Retrieve Supabase API keys and configure them securely in Vercel and local environment variables.
+### Details:
+Acceptance Criteria: All required API keys (e.g., SUPABASE_URL, SUPABASE_ANON_KEY) are securely stored in Vercel and local .env files.
+
+## 5. Create and Configure .env File [pending]
+### Dependencies: 1.4
+### Description: Generate a .env file (or .env.local) with all necessary environment variables for local development.
+### Details:
+Acceptance Criteria: .env file exists, contains all required variables, and is ignored by git.
+
+## 6. Run Database Migrations [pending]
+### Dependencies: 1.2, 1.5
+### Description: Apply all pending database migrations to the Supabase project.
+### Details:
+Acceptance Criteria: All migrations run successfully, and database schema matches project requirements.
+
+## 7. Deploy Application to Vercel [pending]
+### Dependencies: 1.3, 1.5
+### Description: Deploy the application to Vercel using the CLI or dashboard.
+### Details:
+Acceptance Criteria: Deployment completes without errors, and the application is accessible via the Vercel-provided URL.
+
+## 8. Run and Validate API Test Script [pending]
+### Dependencies: None
+### Description: Execute the provided API test script to verify that endpoints function as expected.
+### Details:
+Acceptance Criteria: All API tests pass, confirming correct integration and deployment.
+

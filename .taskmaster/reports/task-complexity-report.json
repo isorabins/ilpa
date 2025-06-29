@@ -1,0 +1,133 @@
+{
+	"meta": {
+		"generatedAt": "2025-06-29T02:24:34.810Z",
+		"tasksAnalyzed": 15,
+		"totalTasks": 15,
+		"analysisCount": 15,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Setup Development Environment",
+			"complexityScore": 5,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down each environment setup step (repo cloning, Vercel config, Supabase project, API key management, .env creation, migrations, deployment, API test script) into individual subtasks with clear acceptance criteria.",
+			"reasoning": "This task involves multiple tools and integrations but follows standard setup procedures. Each step is distinct and can be parallelized, but the overall complexity is moderate due to the number of systems involved."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Implement Base Agent and LLM Router",
+			"complexityScore": 8,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Expand into subtasks for file creation, base class implementation, LLM routing logic, Anthropic integration, OpenAI fallback, rate limiting, error handling, async API calls, and streaming response handling.",
+			"reasoning": "This task requires designing a robust, asynchronous agent architecture with multi-provider LLM routing, error handling, and streaming, which increases both cyclomatic and cognitive complexity[5]."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Implement Database Client and Models",
+			"complexityScore": 8,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Decompose into subtasks for client setup, user filtering, model definitions, CRUD operations, async support, connection pooling, and unit testing for each model.",
+			"reasoning": "Setting up a database client with async operations, user filtering, and multiple models involves high coupling and maintainability concerns, especially with async and pooling[5]."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Implement Authentication Middleware",
+			"complexityScore": 8,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Expand into subtasks for middleware file creation, JWT validation, FastAPI dependency, Supabase integration, session management, rate limiting, registration/login endpoints, and password hashing.",
+			"reasoning": "Authentication touches security, session management, and third-party integration, increasing both cyclomatic and cognitive complexity[5]."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Implement Life Coach Agent",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down into subtasks for agent class creation, memory management, conversation storage, retrieval methods, prompt templating, response generation, and session management.",
+			"reasoning": "This agent builds on existing patterns but adds memory and session logic, requiring careful design for maintainability and correctness."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Implement Domain Agents",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Expand into subtasks for directory setup, base class, each domain agent, file processing logic, NLP integration, insight storage, confidence scoring, and report generation.",
+			"reasoning": "Multiple specialized agents with NLP and file processing increase complexity, but the structure can be modularized to manage maintainability."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Implement Weekly Planning Agent",
+			"complexityScore": 8,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Decompose into subtasks for agent class, planning session methods, domain report aggregation, prompt templates, plan storage, retrieval, dialogue management, and unit testing.",
+			"reasoning": "This agent requires aggregation of multiple data sources, interactive dialogue, and session management, leading to high cognitive and cyclomatic complexity[5]."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Implement File Upload System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Break down into subtasks for router creation, endpoint implementation, multipart handling, domain routing, queue setup, background processing, status updates, validation, and error handling.",
+			"reasoning": "File uploads involve async processing, validation, error handling, and integration with background tasks, increasing complexity."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Implement Nightly Summarizer",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Expand into subtasks for summarizer class, conversation processing, summary logic, memory cleanup, cron job setup, error handling, logging, and retry mechanism.",
+			"reasoning": "Scheduled background processing with data cleanup and error handling adds moderate complexity, especially with cron integration."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Implement API Endpoints",
+			"complexityScore": 9,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Decompose into subtasks for router setup, chat endpoints, planning endpoints, plan management, authentication, validation, rate limiting, and error handling.",
+			"reasoning": "API layer must coordinate multiple features, enforce security, validation, and error handling, resulting in high cyclomatic and cognitive complexity[5]."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Implement Frontend Chat Interface",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down into subtasks for project setup, chat component, real-time updates, message input, typing indicators, history loading, markdown support, and error handling.",
+			"reasoning": "Real-time features and UI state management increase complexity, but the task is manageable with clear separation of concerns."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Implement Frontend Planning Interface",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Expand into subtasks for planning component, session management, interactive dialogue, plan review/editing, finalization, visualization, drag-and-drop, and progress tracking.",
+			"reasoning": "Interactive UI with drag-and-drop and visualization adds moderate complexity, especially for state and event handling."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Implement Frontend File Upload",
+			"complexityScore": 6,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Decompose into subtasks for upload component, drag-and-drop, validation, progress bar, domain selection, error handling, file list view, and delete functionality.",
+			"reasoning": "Standard frontend file upload features with some validation and UI state management; complexity is moderate."
+		},
+		{
+			"taskId": 14,
+			"taskTitle": "Implement Frontend Authentication",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down into subtasks for login/registration forms, JWT management, protected routes, logout, password reset, remember me, social login, and session timeout.",
+			"reasoning": "Frontend auth flows require careful state and token management, with additional complexity for social login and session handling."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Perform Integration Testing and Deployment",
+			"complexityScore": 9,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Expand into subtasks for E2E test suite, user flow testing, load testing, security audit, query optimization, production setup, Supabase config, monitoring setup, and final deployment.",
+			"reasoning": "This task covers comprehensive testing, optimization, security, and deployment, requiring coordination across all system components and environments, resulting in high overall complexity."
+		}
+	]
+}

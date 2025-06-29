@@ -1,0 +1,72 @@
+# Task ID: 5
+# Title: Implement Life Coach Agent
+# Status: pending
+# Dependencies: 2, 3, 4
+# Priority: high
+# Description: Create the Life Coach Agent with conversation and memory management.
+# Details:
+1. Create `src/agents/life_coach_agent.py`
+2. Implement LifeCoachAgent class inheriting from BaseAgent
+3. Copy F@4's SimpleMemory class for conversation persistence
+4. Implement conversation storage in both conversations and memory tables
+5. Create method for retrieving conversation history
+6. Implement prompt template for life coach interactions
+7. Add method for generating responses based on conversation history
+8. Implement conversation session management
+
+# Test Strategy:
+1. Unit test LifeCoachAgent methods
+2. Test conversation persistence and retrieval
+3. Verify memory management (100-message rolling window)
+4. Test response generation with mock LLM calls
+5. Validate conversation session handling
+
+# Subtasks:
+## 1. Design Agent Class Structure [pending]
+### Dependencies: None
+### Description: Define the core agent class, including its attributes, methods, and interfaces for extensibility and maintainability.
+### Details:
+Establish the base class for the agent, considering inheritance, encapsulation, and clear separation of concerns.
+
+## 2. Implement Memory Management [pending]
+### Dependencies: 5.1
+### Description: Develop mechanisms for the agent to store, update, and retrieve relevant information during and across sessions.
+### Details:
+Choose appropriate data structures and strategies (e.g., short-term vs. long-term memory) to ensure efficient and accurate memory handling.
+
+## 3. Develop Conversation Storage Logic [pending]
+### Dependencies: 5.1
+### Description: Create systems to persist and organize conversation history for each session.
+### Details:
+Design storage solutions (in-memory, database, or file-based) that support efficient retrieval and scalability.
+
+## 4. Implement Retrieval Methods [pending]
+### Dependencies: 5.2, 5.3
+### Description: Build methods to access stored conversations and memory, supporting both contextual and historical queries.
+### Details:
+Ensure retrieval methods are optimized for speed and accuracy, and can handle edge cases such as incomplete or corrupted data.
+
+## 5. Design Prompt Templating System [pending]
+### Dependencies: 5.2, 5.3
+### Description: Create a flexible system for constructing prompts dynamically based on conversation context and agent memory.
+### Details:
+Allow for reusable templates, variable interpolation, and context-aware prompt assembly.
+
+## 6. Implement Response Generation Logic [pending]
+### Dependencies: 5.4, 5.5
+### Description: Develop the logic for generating agent responses using prompt templates, memory, and conversation history.
+### Details:
+Integrate with language models or rule-based engines as needed, ensuring responses are coherent and contextually relevant.
+
+## 7. Develop Session Management System [pending]
+### Dependencies: 5.3
+### Description: Build mechanisms to create, track, and terminate user sessions, linking them to conversation and memory storage.
+### Details:
+Ensure session lifecycle is robust, supports concurrent users, and handles session expiration or cleanup.
+
+## 8. Integrate and Validate Agent Components [pending]
+### Dependencies: 5.7
+### Description: Combine all components, test end-to-end functionality, and validate maintainability and correctness.
+### Details:
+Perform integration testing, address edge cases, and refine interfaces for long-term maintainability.
+

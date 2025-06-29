@@ -1,0 +1,72 @@
+# Task ID: 7
+# Title: Implement Weekly Planning Agent
+# Status: pending
+# Dependencies: 2, 3, 5
+# Priority: high
+# Description: Create the Weekly Planning Agent for interactive planning sessions.
+# Details:
+1. Create `src/agents/weekly_planning_agent.py`
+2. Implement WeeklyPlanningAgent class inheriting from BaseAgent
+3. Create methods for starting, continuing, and finalizing planning sessions
+4. Implement logic to aggregate domain reports and life coach summaries
+5. Create prompt template for interactive planning
+6. Implement plan storage in weekly_plans table
+7. Add method for retrieving previous week's plan and completion status
+8. Implement collaborative dialogue management for plan creation
+
+# Test Strategy:
+1. Unit test WeeklyPlanningAgent methods
+2. Test planning session workflow (start, continue, finalize)
+3. Verify correct aggregation of domain reports and summaries
+4. Test plan storage and retrieval
+5. Validate interactive planning dialogue
+
+# Subtasks:
+## 1. Design Agent Class Structure [pending]
+### Dependencies: None
+### Description: Define the core agent class, including attributes and methods for handling planning, dialogue, and data aggregation.
+### Details:
+Specify class interfaces, inheritance, and modularity to support future extensions and integration with other components.
+
+## 2. Implement Planning Session Methods [pending]
+### Dependencies: 7.1
+### Description: Develop methods for initiating, updating, and finalizing planning sessions within the agent.
+### Details:
+Ensure session methods can manage state, handle user input, and coordinate with other agent functions.
+
+## 3. Develop Domain Report Aggregation Logic [pending]
+### Dependencies: 7.1
+### Description: Create mechanisms to aggregate and synthesize data from multiple domain sources for reporting.
+### Details:
+Implement data fetching, normalization, and aggregation routines to support comprehensive domain reports.
+
+## 4. Create Prompt Templates [pending]
+### Dependencies: 7.1
+### Description: Design and implement prompt templates for agent interactions, ensuring clarity and context preservation.
+### Details:
+Use best practices in prompt engineering, including markdown formatting, stepwise instructions, and fallback phrases.
+
+## 5. Implement Plan Storage Mechanism [pending]
+### Dependencies: 7.2
+### Description: Develop a system for storing and retrieving planning session data and generated plans.
+### Details:
+Choose appropriate storage solutions (e.g., database, in-memory) and ensure data integrity and accessibility.
+
+## 6. Develop Plan Retrieval Functionality [pending]
+### Dependencies: 7.5
+### Description: Enable efficient retrieval of stored plans and session data for ongoing or future interactions.
+### Details:
+Implement search, filtering, and versioning features to support complex retrieval scenarios.
+
+## 7. Implement Dialogue Management System [pending]
+### Dependencies: 7.2, 7.4
+### Description: Build a dialogue management layer to handle multi-turn conversations, context tracking, and error handling.
+### Details:
+Ensure the system can manage user context, preserve session continuity, and gracefully handle ambiguities.
+
+## 8. Develop Unit Tests for All Components [pending]
+### Dependencies: 7.2, 7.3, 7.4, 7.5, 7.7
+### Description: Write comprehensive unit tests for agent class, planning methods, aggregation logic, prompt templates, storage, retrieval, and dialogue management.
+### Details:
+Ensure high test coverage, including edge cases and error handling, to maintain code quality and reliability.
+

@@ -1,0 +1,72 @@
+# Task ID: 9
+# Title: Implement Nightly Summarizer
+# Status: pending
+# Dependencies: 3, 5
+# Priority: medium
+# Description: Create the nightly summarizer for long-term memory processing.
+# Details:
+1. Create `src/agents/nightly_summarizer.py`
+2. Implement NightlySummarizer class
+3. Create method for processing conversations to long-term memory
+4. Implement logic to avoid summarizing summaries
+5. Add method for cleaning up memory table (delete after 100 messages)
+6. Create Vercel cron job for nightly processing
+7. Implement error handling and logging for nightly job
+8. Add retry mechanism for failed summarizations
+
+# Test Strategy:
+1. Unit test NightlySummarizer methods
+2. Test conversation processing to long-term memory
+3. Verify memory table cleanup
+4. Test Vercel cron job execution
+5. Validate error handling and retry mechanism
+
+# Subtasks:
+## 1. Design Summarizer Class [pending]
+### Dependencies: None
+### Description: Develop a class responsible for generating summaries from input text, supporting both single and batch processing.
+### Details:
+Define methods for initializing the summarizer, accepting input, and returning summaries. Ensure compatibility with the chosen LLM or summarization engine.
+
+## 2. Implement Conversation Processing [pending]
+### Dependencies: 9.1
+### Description: Create logic to extract, preprocess, and structure conversation data for summarization.
+### Details:
+Handle parsing of conversation logs, cleaning irrelevant data, and formatting input for the summarizer class.
+
+## 3. Develop Summary Logic [pending]
+### Dependencies: 9.2
+### Description: Integrate summarizer class with conversation processing to generate and store summaries.
+### Details:
+Implement workflow to pass processed conversations to the summarizer and manage summary outputs, including handling edge cases like empty or malformed input.
+
+## 4. Implement Memory Cleanup [pending]
+### Dependencies: 9.3
+### Description: Design and implement routines to clean up old or unnecessary data from memory and storage.
+### Details:
+Define criteria for data retention and deletion, ensuring efficient resource usage and compliance with data policies.
+
+## 5. Set Up Cron Job for Scheduled Processing [pending]
+### Dependencies: 9.4
+### Description: Configure a cron job or equivalent scheduler to trigger conversation processing, summarization, and cleanup at defined intervals.
+### Details:
+Ensure the cron job reliably invokes the main processing pipeline and logs execution details.
+
+## 6. Implement Error Handling [pending]
+### Dependencies: 9.5
+### Description: Add robust error handling throughout the pipeline to catch, log, and respond to failures gracefully.
+### Details:
+Define exception handling strategies for each component, including fallback behaviors and user notifications if needed.
+
+## 7. Integrate Logging [pending]
+### Dependencies: None
+### Description: Set up comprehensive logging for all major actions, errors, and system events across the summarization workflow.
+### Details:
+Ensure logs capture sufficient context for debugging and monitoring, and are stored in a retrievable format.
+
+## 8. Develop Retry Mechanism [pending]
+### Dependencies: None
+### Description: Implement a retry mechanism for failed summarization or processing tasks to improve reliability.
+### Details:
+Define retry policies (e.g., exponential backoff, max attempts) and integrate them with error handling and logging.
+

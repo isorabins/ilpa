@@ -1,0 +1,1476 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Development Environment",
+        "description": "Set up the development environment including cloning F@4 repositories (fridays-at-four and FAF_website), configuring Vercel for frontend, Heroku for backend, Supabase, and API keys as a comprehensive Pre-Flight Checklist that must be completed before Day 1 development.",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "details": "# Pre-Flight Checklist\n\n## Repository and Reference Setup\n1. Clone F@4 repositories (fridays-at-four and FAF_website) for reference\n2. Create new ILPA repository with proper .gitignore configuration\n3. Study F@4 code patterns (auth flow, memory system, LLM router, chat streaming)\n\n## Project Structure\n1. Set up project structure with backend and frontend folders\n2. Initialize package.json and requirements.txt files\n3. Configure proper folder hierarchy based on F@4 patterns\n\n## Platform and Tool Setup\n1. Create Vercel account and install CLI (for frontend deployment)\n2. Install Heroku CLI tools (for backend deployment)\n3. Set up new Supabase project for ILPA\n4. Obtain and securely store API keys (Anthropic, OpenAI)\n5. Create .env file with all necessary credentials\n\n## Database and Deployment\n1. Run initial Supabase migrations from F@4\n2. Test Heroku deployment for backend\n3. Test Vercel deployment for frontend and Supabase connection\n4. Create test_setup.py verification script to verify all components\n\n## Verification Steps\n1. Verify all CLI tools function properly\n2. Confirm API keys work with test requests\n3. Validate database connection and schema\n4. Test deployment pipeline end-to-end\n\n<info added on 2025-06-29T02:52:44.148Z>\n## Research Findings: F@4 Implementation Strategy for ILPA\n\n### Patterns to Copy Directly\n- LLM Router and Base Agent Patterns from F@4's main.py\n- Simple keyword search from simple_memory.py (not embeddings or complex search)\n- Frontend Project Structure including component organization and WebSocket updates\n\n### Patterns to Adapt\n- Database Models and ORM Integration (use F@4's schema.sql as reference)\n- Agent Role Definitions for multi-agent architecture\n- Frontend Authentication Flow for Supabase integration\n\n### Research-Guided Implementation Needs\n- Multi-Agent Coordination using message passing protocols\n- Long-Term Memory Summarization with provenance tracking\n- Advanced Frontend Features like drag-and-drop planning\n\n### File Path Mapping\n- src/database/client.py: Copy simple keyword search from F@4's simple_memory.py\n- src/models/: Adapt from F@4's schema.sql\n- src/agents/base_agent.py: Copy LLM router logic\n- src/agents/nightly_summarizer.py: Research-guided implementation\n- src/auth/middleware.py: Adapt F@4 auth patterns\n- src/frontend/: Copy/adapt F@4 structure\n\n### Implementation Priority\n1. Copy core LLM routing and simple keyword search patterns first\n2. Adapt authentication and basic agent roles next\n3. Research and implement multi-agent coordination last\n</info added on 2025-06-29T02:52:44.148Z>\n<info added on 2025-06-29T04:44:11.287Z>\n## Research Query: F@4 Implementation Patterns for ILPA\n\n### Key Implementation Files to Copy\n1. **LLM Router**: Copy `llm_router.py` from fridays-at-four repository directly\n2. **Memory System**: Extract keyword search functionality from `simple_memory.py`\n3. **Authentication Flow**: Copy `auth_middleware.py` and related JWT validation files\n4. **Frontend Components**: Reuse login, registration, and protected route components from FAF_website\n\n### Adaptation Strategy for Multi-Agent Architecture\n1. **Agent Communication Layer**:\n   - Create a new `agent_coordinator.py` file that handles message passing between agents\n   - Implement a standardized message format for inter-agent communication\n   - Add message queue system for asynchronous agent interactions\n\n2. **Database Schema Modifications**:\n   - Extend F@4's schema.sql to include agent-specific tables\n   - Add relationship tables for tracking agent interactions\n   - Create views for simplified data access patterns\n\n3. **Deployment Configuration**:\n   - Update Heroku Procfile to support multi-agent backend processes\n   - Configure Vercel environment variables for agent-specific frontend features\n   - Set up Supabase RLS policies for agent-specific data access\n\n### Implementation Priority Order\n1. Core infrastructure (auth, database, LLM router)\n2. Single-agent functionality testing\n3. Multi-agent communication layer\n4. Advanced features (planning tools, summarization)\n</info added on 2025-06-29T04:44:11.287Z>",
+        "testStrategy": "1. Verify successful cloning of F@4 repositories (fridays-at-four and FAF_website)\n2. Confirm Vercel CLI installation and login for frontend deployment\n3. Confirm Heroku CLI installation and login for backend deployment\n4. Test Supabase connection using CLI\n5. Validate API keys with test requests\n6. Ensure successful Vercel deployment of frontend\n7. Ensure successful Heroku deployment of backend\n8. Run test_setup.py script to verify all components\n9. Validate project structure against requirements\n10. Confirm .gitignore properly excludes sensitive files\n11. Verify all verification steps in the Pre-Flight Checklist pass",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Clone the Repository",
+            "description": "Clone the F@4 reference repositories (fridays-at-four and FAF_website) from GitHub to your local machine and create a new ILPA repository.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Acceptance Criteria:\n- F@4 repositories (fridays-at-four and FAF_website) are cloned locally\n- New ILPA repository is created\n- Proper .gitignore is configured to exclude sensitive files\n- Able to run 'git status' without errors",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create Supabase Project",
+            "description": "Set up a new Supabase project via the Supabase dashboard for ILPA.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Acceptance Criteria: Supabase project is visible in the dashboard, and project URL and anon key are accessible.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure Vercel Project for Frontend",
+            "description": "Create and link a new Vercel project for the frontend, connecting it to the ILPA repository.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Acceptance Criteria: Vercel project is created for frontend deployment, repository is linked, and project appears in the Vercel dashboard.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Configure Heroku Project for Backend",
+            "description": "Create and set up a new Heroku project for the backend deployment.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Acceptance Criteria: Heroku project is created for backend deployment, repository is linked, and project appears in the Heroku dashboard.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Manage API Keys and Secrets",
+            "description": "Retrieve Supabase, Anthropic, and OpenAI API keys and configure them securely in Vercel, Heroku, and local environment variables.",
+            "status": "pending",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Acceptance Criteria: All required API keys (e.g., SUPABASE_URL, SUPABASE_ANON_KEY, ANTHROPIC_API_KEY, OPENAI_API_KEY) are securely stored in Vercel, Heroku, and local .env files.",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create and Configure .env File",
+            "description": "Generate a .env file (or .env.local) with all necessary environment variables for local development.",
+            "status": "pending",
+            "dependencies": [
+              5
+            ],
+            "details": "Acceptance Criteria: .env file exists, contains all required variables, and is ignored by git.",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Run Database Migrations",
+            "description": "Apply all pending database migrations from F@4 to the Supabase project.",
+            "status": "pending",
+            "dependencies": [
+              2,
+              6
+            ],
+            "details": "Acceptance Criteria: All migrations run successfully, and database schema matches project requirements.",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Deploy Frontend to Vercel",
+            "description": "Deploy the frontend application to Vercel using the CLI or dashboard.",
+            "status": "pending",
+            "dependencies": [
+              3,
+              6
+            ],
+            "details": "Acceptance Criteria: Frontend deployment completes without errors, and the application is accessible via the Vercel-provided URL.",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Deploy Backend to Heroku",
+            "description": "Deploy the backend application to Heroku using the CLI or dashboard.",
+            "status": "pending",
+            "dependencies": [
+              4,
+              6
+            ],
+            "details": "Acceptance Criteria: Backend deployment completes without errors, and the API is accessible via the Heroku-provided URL.",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Run and Validate API Test Script",
+            "description": "Execute the provided API test script to verify that endpoints function as expected.",
+            "status": "pending",
+            "dependencies": [
+              8,
+              9
+            ],
+            "details": "Acceptance Criteria: All API tests pass, confirming correct integration and deployment.",
+            "testStrategy": ""
+          },
+          {
+            "id": 11,
+            "title": "Install CLI Tools",
+            "description": "Install and configure Heroku CLI tools for backend deployment and Vercel CLI for frontend deployment.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Acceptance Criteria:\n- Heroku CLI is installed and functional for backend deployment\n- Vercel CLI is installed and functional for frontend deployment\n- Login to both platforms is successful",
+            "testStrategy": "Verify CLI installation with 'heroku --version' and 'vercel --version'"
+          },
+          {
+            "id": 12,
+            "title": "Set Up Project Structure",
+            "description": "Create the proper project structure with backend and frontend folders based on F@4 patterns from fridays-at-four and FAF_website repositories.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Acceptance Criteria:\n- Backend and frontend folders are created\n- package.json and requirements.txt files are initialized\n- Folder hierarchy matches F@4 reference structure\n- Key directories like src/database, src/models, src/agents, src/auth, and src/frontend are created\n- Structure supports simple keyword search from simple_memory.py",
+            "testStrategy": "Verify folder structure against F@4 reference"
+          },
+          {
+            "id": 13,
+            "title": "Create Verification Script",
+            "description": "Develop test_setup.py script to verify all components of the development environment.",
+            "status": "pending",
+            "dependencies": [
+              5,
+              6,
+              11
+            ],
+            "details": "Acceptance Criteria:\n- Script tests API key validity\n- Script verifies database connection\n- Script checks CLI tool installation\n- Script validates project structure\n- Script tests Heroku backend connection\n- Script tests Vercel frontend connection\n- All tests pass successfully",
+            "testStrategy": "Run test_setup.py and verify all checks pass"
+          },
+          {
+            "id": 14,
+            "title": "Complete Pre-Flight Verification",
+            "description": "Run through all verification steps in the Pre-Flight Checklist to ensure the environment is ready for Day 1 development.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
+            ],
+            "details": "Acceptance Criteria:\n- All CLI tools function properly\n- API keys work with test requests\n- Database connection and schema are valid\n- Deployment pipeline works end-to-end (Heroku for backend, Vercel for frontend)\n- Project structure is correct\n- Simple keyword search functionality is verified\n- All verification steps pass",
+            "testStrategy": "Complete checklist verification and document results"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement Base Agent and LLM Router",
+        "description": "Copy the LLM router from F@4 directly to implement the base agent and LLM routing functionality.",
+        "status": "pending",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "details": "Copy `fridays-at-four/src/llm_router.py` directly into our project structure. This file already handles:\n\n1. Claude API as primary LLM (claude-2 model)\n2. OpenAI fallback using gpt-3.5-turbo\n3. Proper error handling\n4. Asynchronous API calls\n5. Streaming response handling\n\nNo custom implementation is needed as F@4's router is production-ready and already handles all our requirements. Simply copy the file and ensure proper imports are updated to match our project structure.\n\nReference files:\n- `fridays-at-four/src/llm_router.py` - main file to copy\n- `fridays-at-four/src/claude_client_simple.py` - for understanding Claude integration\n- `fridays-at-four/src/openai_client.py` - for understanding OpenAI integration\n- `fridays-at-four/src/main.py` - for understanding how the router is used",
+        "testStrategy": "1. Verify the copied LLM router works with our project structure\n2. Test that the router correctly uses Claude as primary LLM\n3. Test the fallback mechanism to OpenAI when Claude fails\n4. Validate streaming responses work correctly",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Implement Database Client and Models",
+        "description": "Set up the database client with user filtering and create database models following F@4 patterns.",
+        "status": "pending",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "details": "1. Create `src/database/client.py` based on `fridays-at-four/src/simple_memory.py`\n2. Implement DatabaseClient class using Supabase Python client\n3. Add user filtering to all database operations following F@4 patterns from simple_memory.py\n4. Create model definitions in `src/models/` directory\n5. Reference `supabase/schema.sql` for database schema examples\n6. Define domain-specific tables only\n7. Leverage Supabase's built-in async support",
+        "testStrategy": "1. Verify user filtering on all operations\n2. Validate data integrity and relationships\n3. Ensure compatibility with F@4 patterns",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Copy Database Patterns from simple_memory.py",
+            "description": "Copy and adapt the database patterns from fridays-at-four/src/simple_memory.py to create the database client implementation.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create client in src/database/client.py based on F@4 patterns from simple_memory.py. Leverage Supabase's built-in async support. Focus on maintaining the same interface and user filtering approach as in the original implementation.",
+            "testStrategy": "Verify the client follows the same patterns as simple_memory.py and supports the same operations."
+          },
+          {
+            "id": 2,
+            "title": "Create Domain-Specific Tables",
+            "description": "Define domain-specific tables in the models directory based on the application requirements.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Create model definitions in src/models/ directory for domain-specific tables only. Reference supabase/schema.sql for table structures and relationships. Follow model organization patterns from F@4's simple_memory.py implementation. Ensure models work with Supabase's async capabilities.",
+            "testStrategy": "Validate that the models accurately represent the domain requirements and work correctly with the database client."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement Authentication Middleware",
+        "description": "Set up authentication middleware using F@4 patterns.",
+        "status": "pending",
+        "dependencies": [
+          1,
+          3
+        ],
+        "priority": "high",
+        "details": "Copy authentication patterns from F@4 main.py directly - includes JWT validation, Supabase integration, and middleware. The F@4 codebase already has complete JWT auth with Supabase that we can leverage instead of building from scratch.",
+        "testStrategy": "1. Verify the copied authentication code works with our application\n2. Test JWT validation with sample tokens\n3. Confirm Supabase integration is functioning correctly",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement Life Coach Agent",
+        "description": "Create the Life Coach Agent with conversation and memory management.",
+        "details": "1. Create `src/agents/life_coach_agent.py`\n2. Implement LifeCoachAgent class inheriting from BaseAgent\n3. Copy F@4's SimpleMemory class for conversation persistence\n4. Implement conversation storage in both conversations and memory tables\n5. Create method for retrieving conversation history\n6. Implement prompt template for life coach interactions\n7. Add method for generating responses based on conversation history\n8. Implement conversation session management",
+        "testStrategy": "1. Unit test LifeCoachAgent methods\n2. Test conversation persistence and retrieval\n3. Verify memory management (100-message rolling window)\n4. Test response generation with mock LLM calls\n5. Validate conversation session handling",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Agent Class Structure",
+            "description": "Define the core agent class, including its attributes, methods, and interfaces for extensibility and maintainability.",
+            "dependencies": [],
+            "details": "Establish the base class for the agent, considering inheritance, encapsulation, and clear separation of concerns.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Memory Management",
+            "description": "Develop mechanisms for the agent to store, update, and retrieve relevant information during and across sessions.",
+            "dependencies": [
+              1
+            ],
+            "details": "Choose appropriate data structures and strategies (e.g., short-term vs. long-term memory) to ensure efficient and accurate memory handling.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop Conversation Storage Logic",
+            "description": "Create systems to persist and organize conversation history for each session.",
+            "dependencies": [
+              1
+            ],
+            "details": "Design storage solutions (in-memory, database, or file-based) that support efficient retrieval and scalability.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Retrieval Methods",
+            "description": "Build methods to access stored conversations and memory, supporting both contextual and historical queries.",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Ensure retrieval methods are optimized for speed and accuracy, and can handle edge cases such as incomplete or corrupted data.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Design Prompt Templating System",
+            "description": "Create a flexible system for constructing prompts dynamically based on conversation context and agent memory.",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Allow for reusable templates, variable interpolation, and context-aware prompt assembly.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Response Generation Logic",
+            "description": "Develop the logic for generating agent responses using prompt templates, memory, and conversation history.",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Integrate with language models or rule-based engines as needed, ensuring responses are coherent and contextually relevant.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Develop Session Management System",
+            "description": "Build mechanisms to create, track, and terminate user sessions, linking them to conversation and memory storage.",
+            "dependencies": [
+              3
+            ],
+            "details": "Ensure session lifecycle is robust, supports concurrent users, and handles session expiration or cleanup.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Integrate and Validate Agent Components",
+            "description": "Combine all components, test end-to-end functionality, and validate maintainability and correctness.",
+            "dependencies": [
+              7
+            ],
+            "details": "Perform integration testing, address edge cases, and refine interfaces for long-term maintainability.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Weekly Planning Agent",
+        "description": "Create the Weekly Planning Agent for interactive planning sessions.",
+        "details": "1. Create `src/agents/weekly_planning_agent.py`\n2. Implement WeeklyPlanningAgent class inheriting from BaseAgent\n3. Create methods for starting, continuing, and finalizing planning sessions\n4. Implement logic to aggregate domain reports and life coach summaries\n5. Create prompt template for interactive planning\n6. Implement plan storage in weekly_plans table\n7. Add method for retrieving previous week's plan and completion status\n8. Implement collaborative dialogue management for plan creation",
+        "testStrategy": "1. Unit test WeeklyPlanningAgent methods\n2. Test planning session workflow (start, continue, finalize)\n3. Verify correct aggregation of domain reports and summaries\n4. Test plan storage and retrieval\n5. Validate interactive planning dialogue",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Agent Class Structure",
+            "description": "Define the core agent class, including attributes and methods for handling planning, dialogue, and data aggregation.",
+            "dependencies": [],
+            "details": "Specify class interfaces, inheritance, and modularity to support future extensions and integration with other components.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Planning Session Methods",
+            "description": "Develop methods for initiating, updating, and finalizing planning sessions within the agent.",
+            "dependencies": [
+              1
+            ],
+            "details": "Ensure session methods can manage state, handle user input, and coordinate with other agent functions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop Domain Report Aggregation Logic",
+            "description": "Create mechanisms to aggregate and synthesize data from multiple domain sources for reporting.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement data fetching, normalization, and aggregation routines to support comprehensive domain reports.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create Prompt Templates",
+            "description": "Design and implement prompt templates for agent interactions, ensuring clarity and context preservation.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use best practices in prompt engineering, including markdown formatting, stepwise instructions, and fallback phrases.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Plan Storage Mechanism",
+            "description": "Develop a system for storing and retrieving planning session data and generated plans.",
+            "dependencies": [
+              2
+            ],
+            "details": "Choose appropriate storage solutions (e.g., database, in-memory) and ensure data integrity and accessibility.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Develop Plan Retrieval Functionality",
+            "description": "Enable efficient retrieval of stored plans and session data for ongoing or future interactions.",
+            "dependencies": [
+              5
+            ],
+            "details": "Implement search, filtering, and versioning features to support complex retrieval scenarios.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement Dialogue Management System",
+            "description": "Build a dialogue management layer to handle multi-turn conversations, context tracking, and error handling.",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Ensure the system can manage user context, preserve session continuity, and gracefully handle ambiguities.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Develop Unit Tests for All Components",
+            "description": "Write comprehensive unit tests for agent class, planning methods, aggregation logic, prompt templates, storage, retrieval, and dialogue management.",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5,
+              7
+            ],
+            "details": "Ensure high test coverage, including edge cases and error handling, to maintain code quality and reliability.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Implement File Upload System",
+        "description": "Create the file upload system with domain routing.",
+        "details": "1. Create `src/api/routers/uploads.py`\n2. Implement file upload endpoint with FastAPI\n3. Use python-multipart for handling file uploads\n4. Implement domain selection logic\n5. Create file processing queue using Redis\n6. Implement background task for file processing\n7. Update uploaded_files table with processing status\n8. Implement file size and type validation\n9. Add error handling for failed uploads or processing",
+        "testStrategy": "1. Test file upload endpoint with various file types\n2. Verify correct domain routing\n3. Test file processing queue functionality\n4. Validate update of processing status\n5. Test file size and type restrictions\n6. Verify error handling for invalid uploads",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Router Creation",
+            "description": "Set up the main router to handle incoming requests and route them to the appropriate endpoints.",
+            "dependencies": [],
+            "details": "Define the base router structure, import necessary modules, and prepare for endpoint registration.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Endpoint Implementation",
+            "description": "Implement the specific endpoints for file upload and related operations.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create endpoints such as POST /upload and GET /status, ensuring they are registered with the router.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Multipart Handling",
+            "description": "Integrate multipart/form-data parsing to support file uploads.",
+            "dependencies": [
+              2
+            ],
+            "details": "Use a middleware or library to parse multipart requests and extract file data from incoming requests.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Domain Routing",
+            "description": "Configure routing logic to support domain-based or subdomain-based routing if required.",
+            "dependencies": [
+              1
+            ],
+            "details": "Set up logic to route requests based on domain or subdomain, enabling multi-tenant or domain-specific handling.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Queue Setup",
+            "description": "Establish a queue system to manage background processing of uploaded files.",
+            "dependencies": [
+              3
+            ],
+            "details": "Integrate a message queue or task queue (e.g., Bull, RabbitMQ) to handle async processing of uploads.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Background Processing",
+            "description": "Implement background workers to process files asynchronously after upload.",
+            "dependencies": [
+              5
+            ],
+            "details": "Create worker processes that consume tasks from the queue and perform file processing (e.g., virus scan, resizing).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Status Updates",
+            "description": "Enable status tracking and reporting for file uploads and background tasks.",
+            "dependencies": [],
+            "details": "Store and expose status information (e.g., pending, processing, complete, failed) via API endpoints.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Validation",
+            "description": "Implement validation for incoming requests and uploaded files.",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Validate file types, sizes, and any additional metadata using schema validators or custom logic.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Error Handling",
+            "description": "Add robust error handling throughout the upload and processing pipeline.",
+            "dependencies": [
+              2,
+              3,
+              5,
+              8
+            ],
+            "details": "Catch and respond to errors at each stage, providing meaningful error messages and status codes.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Implement Nightly Summarizer",
+        "description": "Create the nightly summarizer for long-term memory processing.",
+        "status": "pending",
+        "dependencies": [
+          3,
+          5
+        ],
+        "priority": "medium",
+        "details": "1. Create `src/agents/nightly_summarizer.py`\n2. Implement NightlySummarizer class following patterns from simple_memory.py\n3. Create method for processing conversations to long-term memory\n4. Implement logic to avoid summarizing summaries\n5. Add method for cleaning up memory table (delete after 100 messages)\n6. Configure Heroku Scheduler for nightly processing\n7. Implement error handling and logging for nightly job\n8. Add retry mechanism for failed summarizations\n9. Ensure compatibility with simple keyword search functionality",
+        "testStrategy": "1. Unit test NightlySummarizer methods\n2. Test conversation processing to long-term memory\n3. Verify memory table cleanup\n4. Test Heroku Scheduler job execution\n5. Validate error handling and retry mechanism\n6. Verify compatibility with simple keyword search",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Summarizer Class",
+            "description": "Develop a class responsible for generating summaries from input text, supporting both single and batch processing. Follow patterns established in simple_memory.py.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Define methods for initializing the summarizer, accepting input, and returning summaries. Ensure compatibility with the chosen LLM or summarization engine. Reference the structure and patterns used in simple_memory.py for consistency.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Conversation Processing",
+            "description": "Create logic to extract, preprocess, and structure conversation data for summarization.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Handle parsing of conversation logs, cleaning irrelevant data, and formatting input for the summarizer class. Ensure the processed data will work with simple keyword search functionality.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop Summary Logic",
+            "description": "Integrate summarizer class with conversation processing to generate and store summaries.",
+            "status": "pending",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement workflow to pass processed conversations to the summarizer and manage summary outputs, including handling edge cases like empty or malformed input. Structure summaries to be compatible with simple keyword search.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Memory Cleanup",
+            "description": "Design and implement routines to clean up old or unnecessary data from memory and storage.",
+            "status": "pending",
+            "dependencies": [
+              3
+            ],
+            "details": "Define criteria for data retention and deletion, ensuring efficient resource usage and compliance with data policies. Follow patterns from simple_memory.py for consistency.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Set Up Heroku Scheduler for Nightly Processing",
+            "description": "Configure Heroku Scheduler to trigger conversation processing, summarization, and cleanup at defined intervals.",
+            "status": "pending",
+            "dependencies": [
+              4
+            ],
+            "details": "Set up a Heroku Scheduler job to run nightly, invoking the main processing pipeline and logging execution details. Document the configuration process for future reference.",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Error Handling",
+            "description": "Add robust error handling throughout the pipeline to catch, log, and respond to failures gracefully.",
+            "status": "pending",
+            "dependencies": [
+              5
+            ],
+            "details": "Define exception handling strategies for each component, including fallback behaviors and user notifications if needed. Ensure errors are properly captured in Heroku logs.",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Integrate Logging",
+            "description": "Set up comprehensive logging for all major actions, errors, and system events across the summarization workflow.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Ensure logs capture sufficient context for debugging and monitoring, and are stored in a retrievable format. Configure logging to work effectively with Heroku's log management.",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Develop Retry Mechanism",
+            "description": "Implement a retry mechanism for failed summarization or processing tasks to improve reliability.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Define retry policies (e.g., exponential backoff, max attempts) and integrate them with error handling and logging. Ensure compatibility with Heroku's execution environment.",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Ensure Compatibility with Simple Keyword Search",
+            "description": "Verify and optimize the summarizer's output to work effectively with the simple keyword search functionality.",
+            "status": "pending",
+            "dependencies": [
+              3
+            ],
+            "details": "Test and refine the summarization process to ensure generated summaries contain relevant keywords and can be effectively retrieved by the existing simple keyword search implementation.",
+            "testStrategy": "Test keyword search functionality against generated summaries to verify retrieval effectiveness."
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Implement API Endpoints",
+        "description": "Create specialized API endpoints for domain agent interactions, planning, and file uploads.",
+        "status": "pending",
+        "dependencies": [
+          4,
+          5,
+          7,
+          8
+        ],
+        "priority": "high",
+        "details": "1. Create `src/api/routers/` for specialized endpoint categories\n2. Implement domain agent interaction endpoints\n3. Create planning-related endpoints for workflow management\n4. Develop file upload API endpoints with proper validation\n5. Follow F@4 patterns for consistent API design\n6. Ensure compatibility with Heroku deployment\n7. Add rate limiting to prevent abuse\n8. Implement error handling and appropriate HTTP status codes",
+        "testStrategy": "1. Test each API endpoint with valid and invalid requests\n2. Verify authentication on all endpoints\n3. Test rate limiting behavior\n4. Validate request and response schemas\n5. Test error handling for various scenarios\n6. Verify file upload functionality with various file types and sizes\n7. Test Heroku compatibility",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Router Setup",
+            "description": "Design and implement specialized API routers for domain agent interactions, planning, and file uploads.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Establish a modular router structure that supports versioned endpoints and dynamic route management. Ensure routes follow F@4 patterns and are compatible with Heroku deployment.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Domain Agent Interaction Endpoints",
+            "description": "Implement endpoints that facilitate communication with domain-specific agents.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Create endpoints for agent registration, querying, command execution, and status monitoring. Ensure proper authentication and authorization for agent interactions.",
+            "testStrategy": "Test agent registration, command execution, and status retrieval with various scenarios including error cases."
+          },
+          {
+            "id": 3,
+            "title": "Planning Endpoints",
+            "description": "Implement endpoints for workflow planning and management.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop RESTful endpoints for creating, retrieving, updating, and executing plans. Include endpoints for plan validation, simulation, and progress tracking.",
+            "testStrategy": "Test plan creation, execution, and monitoring with various inputs. Verify plan validation logic and error handling."
+          },
+          {
+            "id": 4,
+            "title": "File Upload Endpoints",
+            "description": "Develop and integrate file upload capabilities into the API.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement secure file upload endpoints with support for various file types, size validation, and virus scanning. Ensure compatibility with Heroku's ephemeral filesystem.",
+            "testStrategy": "Test file uploads with various file types, sizes, and concurrent uploads. Verify proper error handling for invalid files."
+          },
+          {
+            "id": 5,
+            "title": "Validation Layer",
+            "description": "Implement input validation for all specialized endpoints to ensure data integrity and prevent malformed requests.",
+            "status": "pending",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Use Pydantic models for request validation, with special attention to file upload validation and domain agent command validation.",
+            "testStrategy": "Test validation with valid and invalid inputs, ensuring proper error messages are returned."
+          },
+          {
+            "id": 6,
+            "title": "Rate Limiting",
+            "description": "Apply rate limiting to protect the API from abuse and ensure fair usage.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              5
+            ],
+            "details": "Configure rate limiting middleware with configurable thresholds per user or IP, with special consideration for file upload endpoints. Ensure compatibility with Heroku's distributed architecture.",
+            "testStrategy": "Test rate limiting behavior under various load conditions and verify proper response headers."
+          },
+          {
+            "id": 7,
+            "title": "Centralized Error Handling",
+            "description": "Implement a centralized error handling mechanism to standardize error responses across the specialized API endpoints.",
+            "status": "pending",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Ensure all errors are caught and returned in a consistent format following F@4 patterns, with appropriate HTTP status codes and messages.",
+            "testStrategy": "Test error handling for various scenarios including network errors, validation errors, and business logic errors."
+          },
+          {
+            "id": 8,
+            "title": "Heroku Deployment Compatibility",
+            "description": "Ensure all API endpoints are compatible with Heroku's platform constraints.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Address Heroku-specific considerations such as ephemeral filesystem for file uploads, request timeout limits, and dyno cycling. Implement appropriate caching and storage strategies.",
+            "testStrategy": "Test deployment to Heroku staging environment and verify all endpoints function correctly under Heroku constraints."
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Implement Frontend Chat Interface",
+        "description": "Create the frontend chat interface for Life Coach conversations.",
+        "details": "1. Set up React project structure (copy F@4)\n2. Implement chat interface component\n3. Add real-time message updates using WebSocket\n4. Implement message input and sending functionality\n5. Add typing indicators and read receipts\n6. Implement message history loading\n7. Add support for markdown rendering in messages\n8. Implement error handling for failed message sends",
+        "testStrategy": "1. Test chat interface rendering\n2. Verify real-time updates with WebSocket\n3. Test message sending and receiving\n4. Validate history loading functionality\n5. Test markdown rendering in messages",
+        "priority": "medium",
+        "dependencies": [
+          10
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Project Setup",
+            "description": "Initialize the project repository, configure the development environment, and install necessary dependencies for both frontend and backend.",
+            "dependencies": [],
+            "details": "Set up version control, choose frameworks (e.g., React for frontend, Node.js for backend), and install libraries for real-time communication and markdown support.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Chat Component Implementation",
+            "description": "Develop the core chat UI component to display messages and user interactions.",
+            "dependencies": [
+              1
+            ],
+            "details": "Design and implement a responsive chat window that lists messages, supports scrolling, and integrates with the application's state management.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Real-Time Updates Integration",
+            "description": "Enable real-time message delivery and updates using a suitable technology (e.g., WebSockets or Socket.io).",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Establish real-time communication between clients and server to broadcast new messages and updates instantly.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Message Input Component",
+            "description": "Create a user input field for composing and sending messages.",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement a text input area with send button, input validation, and integration with the chat component to dispatch new messages.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Typing Indicators",
+            "description": "Implement typing indicators to show when users are composing messages.",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Detect and broadcast typing events in real-time, updating the UI to reflect when other users are typing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Chat History Loading",
+            "description": "Load and display previous chat messages when a user joins or scrolls up.",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Fetch historical messages from the backend and render them in the chat component, supporting pagination or infinite scroll if needed.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Markdown Support",
+            "description": "Add markdown parsing and rendering for chat messages.",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Integrate a markdown parser to allow users to format their messages and display them correctly in the chat UI.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Error Handling",
+            "description": "Implement robust error handling across all chat features.",
+            "dependencies": [
+              3,
+              4,
+              5,
+              7
+            ],
+            "details": "Detect, log, and display errors related to message delivery, connection issues, and invalid input, ensuring graceful degradation and user feedback.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Implement Frontend Planning Interface",
+        "description": "Create the frontend interface for weekly planning sessions.",
+        "details": "1. Create planning session component\n2. Implement interface for starting new planning sessions\n3. Add support for interactive planning dialogue\n4. Create plan review and editing interface\n5. Implement plan finalization and submission\n6. Add visualization for weekly plan (e.g., calendar view)\n7. Implement drag-and-drop for rearranging plan items\n8. Add progress tracking for plan items",
+        "testStrategy": "1. Test planning session workflow\n2. Verify interactive dialogue functionality\n3. Test plan editing and finalization\n4. Validate plan visualization\n5. Test drag-and-drop functionality\n6. Verify progress tracking updates",
+        "priority": "medium",
+        "dependencies": [
+          10,
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Planning Component Structure",
+            "description": "Define the architecture and UI structure for the planning component, including how plans are created, displayed, and managed.",
+            "dependencies": [],
+            "details": "Specify data models, component hierarchy, and initial wireframes for the planning interface.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Session Management",
+            "description": "Develop mechanisms for user session handling, including authentication, session persistence, and state restoration.",
+            "dependencies": [
+              1
+            ],
+            "details": "Ensure users can resume planning sessions and their progress is saved securely.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop Interactive Dialogue System",
+            "description": "Create an interactive dialogue interface to guide users through planning steps and respond to user inputs.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Support conversational interactions, contextual help, and dynamic prompts.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Enable Plan Review and Editing",
+            "description": "Allow users to review, modify, and update their plans within the interface.",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Provide editing tools, change tracking, and undo/redo functionality.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Plan Finalization Workflow",
+            "description": "Develop the process for users to finalize and lock in their plans, including confirmation and export options.",
+            "dependencies": [
+              4
+            ],
+            "details": "Support plan submission, versioning, and export to various formats.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Integrate Visualization Features",
+            "description": "Add visual representations of plans, such as timelines, flowcharts, or dashboards, to enhance understanding.",
+            "dependencies": [
+              1,
+              4
+            ],
+            "details": "Use charts, diagrams, or custom visual components to display plan structure and progress.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Develop Drag-and-Drop Functionality",
+            "description": "Implement intuitive drag-and-drop interactions for rearranging, grouping, or modifying plan elements.",
+            "dependencies": [
+              1
+            ],
+            "details": "Ensure clear feedback, error handling, and accessibility for drag-and-drop actions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Build Progress Tracking System",
+            "description": "Create a system to track and display user progress through the planning process.",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Show completion status, milestones, and actionable next steps within the UI.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Frontend File Upload",
+        "description": "Create the frontend interface for file uploads.",
+        "details": "1. Create file upload component\n2. Implement drag-and-drop file upload\n3. Add file type and size validation\n4. Implement progress bar for upload status\n5. Create domain selection dropdown\n6. Add error handling for failed uploads\n7. Implement file list view for uploaded files\n8. Add option to delete uploaded files",
+        "testStrategy": "1. Test file upload functionality\n2. Verify drag-and-drop behavior\n3. Test file validation rules\n4. Validate upload progress indication\n5. Test domain selection\n6. Verify error handling for various scenarios",
+        "priority": "low",
+        "dependencies": [
+          8,
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Upload Component Structure",
+            "description": "Create the foundational upload component with state management for files and upload status.",
+            "dependencies": [],
+            "details": "Set up a React component (e.g., Uploader.tsx) with useState hooks to manage selected files and upload status. Prepare the basic UI structure for file input and upload button.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Add Drag-and-Drop Functionality",
+            "description": "Enable users to drag and drop files into the upload area.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement drag-and-drop event handlers to allow users to add files by dragging them into the component. Update the file list state accordingly.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement File Validation",
+            "description": "Validate selected files for type, size, and other constraints before upload.",
+            "dependencies": [
+              2
+            ],
+            "details": "Check file types, sizes, and other criteria upon selection or drop. Display validation errors if any file does not meet requirements.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Integrate Progress Bar",
+            "description": "Show upload progress for each file being uploaded.",
+            "dependencies": [
+              3
+            ],
+            "details": "Display a progress bar that updates as files are uploaded, reflecting the current upload percentage.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add Domain Selection Option",
+            "description": "Allow users to select a target domain or destination for the upload.",
+            "dependencies": [
+              1
+            ],
+            "details": "Provide a dropdown or selection UI for users to choose the upload destination (e.g., folder, domain, or category).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Error Handling",
+            "description": "Handle and display errors during file selection, validation, and upload.",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Show user-friendly error messages for issues such as invalid files, network errors, or server-side failures.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Display File List View",
+            "description": "Show a list of selected files with their statuses and actions.",
+            "dependencies": [
+              3
+            ],
+            "details": "Render a list or table of files queued for upload, including file names, sizes, validation status, and upload progress.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement Delete Functionality",
+            "description": "Allow users to remove files from the upload queue before or after upload.",
+            "dependencies": [],
+            "details": "Add a delete/remove button for each file in the list view, updating the state and UI accordingly.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Implement Frontend Authentication",
+        "description": "Integrate existing authentication components from FAF_website into our frontend.",
+        "status": "pending",
+        "dependencies": [
+          4,
+          11
+        ],
+        "priority": "high",
+        "details": "1. Copy authentication components directly from FAF_website (login form, auth context, protected routes, HOCs)\n2. Implement JWT token management (storage and refresh)\n3. Implement protected route handling\n4. Add logout functionality\n5. Create password reset flow\n6. Implement remember me functionality\n7. Add social login options (if time permits)\n8. Implement session timeout handling",
+        "testStrategy": "1. Test login flow with copied components\n2. Verify JWT token management\n3. Test protected route access\n4. Validate logout functionality\n5. Test password reset process\n6. Verify remember me behavior\n7. Test session timeout and refresh",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Copy and Adapt Authentication Components from FAF_website",
+            "description": "Copy authentication components directly from FAF_website without building new ones.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Copy components directly from FAF_website/auth/ and FAF_website/hoc/ directories. This includes login form, authentication context, protected routes, and HOCs. Use the existing components as-is with minimal adaptation, following the established authentication patterns from FAF_website.",
+            "testStrategy": "Verify that copied components render correctly and maintain the same functionality as in the original FAF_website."
+          },
+          {
+            "id": 2,
+            "title": "Integrate JWT Generation and Storage",
+            "description": "Implement logic to handle JWT issuance upon successful login/registration and securely store the token on the client.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Reuse JWT handling logic from FAF_website. Ensure tokens are stored securely (e.g., HttpOnly cookies or localStorage) according to the patterns established in the original implementation.",
+            "testStrategy": "Test that JWT tokens are properly generated, stored, and retrieved using the copied components."
+          },
+          {
+            "id": 3,
+            "title": "Implement Protected Routes",
+            "description": "Set up frontend route guards or middleware to restrict access to authenticated users using JWT validation.",
+            "status": "pending",
+            "dependencies": [
+              2
+            ],
+            "details": "Use the protected route HOC directly from FAF_website/hoc/ to work with our application's routing structure. Ensure protected routes check for valid JWTs and redirect unauthenticated users to the login page.",
+            "testStrategy": "Verify that protected routes correctly restrict access to authenticated users only."
+          },
+          {
+            "id": 4,
+            "title": "Develop Logout Functionality",
+            "description": "Allow users to log out by clearing JWTs and resetting authentication state.",
+            "status": "pending",
+            "dependencies": [
+              2
+            ],
+            "details": "Use the logout functionality from FAF_website to ensure all authentication tokens are removed from storage and user is redirected appropriately.",
+            "testStrategy": "Test that logout properly clears authentication state and prevents access to protected routes."
+          },
+          {
+            "id": 5,
+            "title": "Implement Password Reset Flow",
+            "description": "Adapt the password reset flow from FAF_website if available, or implement a simplified version for the MVP.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "If FAF_website includes password reset functionality, use it directly. Otherwise, implement a basic version that includes email verification and secure token handling.",
+            "testStrategy": "Test the complete password reset flow from request to successful password change."
+          },
+          {
+            "id": 6,
+            "title": "Add 'Remember Me' Functionality",
+            "description": "Enable persistent login sessions by extending JWT expiration or using refresh tokens when 'Remember Me' is selected.",
+            "status": "pending",
+            "dependencies": [
+              2
+            ],
+            "details": "Check if FAF_website implements 'Remember Me' functionality and use it directly. If not, adjust token storage and expiration logic based on user preference.",
+            "testStrategy": "Verify that sessions persist appropriately when 'Remember Me' is selected."
+          },
+          {
+            "id": 7,
+            "title": "Integrate Social Login Providers",
+            "description": "If FAF_website includes social login options, use them directly for our application. This is a lower priority for the MVP.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Check if FAF_website implements social login (OAuth flows) and use it directly if available. This is considered optional for the MVP.",
+            "testStrategy": "If implemented, test social login flows with each provider."
+          },
+          {
+            "id": 8,
+            "title": "Handle Session Timeout and Token Expiry",
+            "description": "Use session timeout handling from FAF_website to detect expired JWTs and handle re-authentication.",
+            "status": "pending",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Use the existing implementation from FAF_website for handling token expiration and session timeouts. Implement frontend checks for token validity and backend enforcement of token expiration.",
+            "testStrategy": "Test that expired tokens are properly detected and handled, either by logging out users or refreshing tokens."
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Perform Integration Testing and Deployment",
+        "description": "Conduct thorough integration testing and deploy the application with backend on Heroku and frontend on Vercel.",
+        "status": "pending",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "priority": "high",
+        "details": "1. Create end-to-end test suite\n2. Test complete user flows (registration, chat, planning, file upload)\n3. Perform load testing to ensure performance\n4. Conduct security audit (e.g., SQL injection, XSS)\n5. Optimize database queries and indexes\n6. Set up production environment (Heroku for backend, Vercel for frontend)\n7. Configure production Supabase instance\n8. Set up monitoring and error tracking (e.g., Sentry)\n9. Configure Heroku Scheduler for backend jobs\n10. Perform final deployment and smoke tests\n11. Reference F@4 repositories (fridays-at-four and FAF_website) for deployment patterns",
+        "testStrategy": "1. Run end-to-end test suite\n2. Conduct manual testing of all user flows\n3. Analyze load test results and optimize if necessary\n4. Address any security vulnerabilities found\n5. Verify production deployment on both Heroku and Vercel\n6. Test monitoring and error tracking systems\n7. Validate scheduled jobs on Heroku Scheduler",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and Implement E2E Test Suite",
+            "description": "Develop a comprehensive end-to-end (E2E) test suite covering all critical user journeys and system integrations.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Define test cases, set up test automation tools, and ensure coverage of all major workflows.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Conduct User Flow Testing",
+            "description": "Test and validate user flows to ensure intuitive navigation and task completion across the application.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Utilize usability testing, A/B testing, and analytics tools to observe user interactions and gather feedback for refinement.",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Perform Load Testing",
+            "description": "Assess system performance under expected and peak loads to identify bottlenecks and ensure scalability.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Simulate concurrent users and transactions, monitor response times, and analyze system behavior under stress.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Conduct Security Audit",
+            "description": "Perform a thorough security audit to identify and mitigate vulnerabilities in the application and infrastructure.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Review authentication, authorization, data protection, and compliance with security best practices.",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Optimize Database Queries",
+            "description": "Analyze and optimize database queries to improve performance and reduce latency.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Profile slow queries, add indexes, and refactor inefficient operations for optimal data access.",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Configure Supabase Environment",
+            "description": "Set up and configure Supabase services, including authentication, database, and storage, for production readiness.",
+            "status": "pending",
+            "dependencies": [
+              5
+            ],
+            "details": "Ensure environment variables, access controls, and integrations are correctly configured.",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Set Up Monitoring and Alerting",
+            "description": "Implement monitoring and alerting systems to track application health, performance, and security events.",
+            "status": "pending",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Integrate with monitoring tools, define key metrics, and configure alerts for critical incidents.",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Prepare Backend Production Environment on Heroku",
+            "description": "Establish a robust backend production environment on Heroku with proper infrastructure, CI/CD pipelines, and rollback strategies.",
+            "status": "pending",
+            "dependencies": [
+              7
+            ],
+            "details": "Set up Heroku application, configure environment variables, and set up Heroku Scheduler for background jobs. Reference F@4 repositories (fridays-at-four) for deployment patterns.",
+            "testStrategy": "Verify Heroku deployment, test scheduled jobs, and ensure proper logging and monitoring."
+          },
+          {
+            "id": 9,
+            "title": "Prepare Frontend Production Environment on Vercel",
+            "description": "Set up frontend deployment environment on Vercel with proper CI/CD integration.",
+            "status": "pending",
+            "dependencies": [
+              7
+            ],
+            "details": "Configure Vercel project settings, environment variables, and build commands. Reference FAF_website repository for Vercel deployment patterns.",
+            "testStrategy": "Verify Vercel deployment, test build process, and ensure proper integration with backend services."
+          },
+          {
+            "id": 10,
+            "title": "Configure Heroku Scheduler",
+            "description": "Set up and configure Heroku Scheduler for running background jobs and scheduled tasks.",
+            "status": "pending",
+            "dependencies": [
+              8
+            ],
+            "details": "Define job schedules, implement task handlers, and ensure proper error handling and logging for scheduled jobs.",
+            "testStrategy": "Test scheduled job execution, verify job completion, and monitor resource usage."
+          },
+          {
+            "id": 11,
+            "title": "Execute Final Deployment",
+            "description": "Deploy the application to production (backend to Heroku, frontend to Vercel), verify system stability, and monitor for post-launch issues.",
+            "status": "pending",
+            "dependencies": [
+              2,
+              8,
+              9,
+              10
+            ],
+            "details": "Coordinate release, perform smoke tests, and ensure all monitoring and alerting systems are active across both platforms.",
+            "testStrategy": "Conduct end-to-end testing across the deployed application, verify all integrations between Heroku backend and Vercel frontend."
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Implement F@4 Memory System Integration",
+        "description": "Create the core memory system using F@4 patterns including conversations table, memory table, buffer management, and nightly summarization integration for ILPA's multi-agent architecture. Reference specific F@4 implementations from simple_memory.py and supabase schema migrations.",
+        "status": "pending",
+        "dependencies": [
+          3,
+          5,
+          9
+        ],
+        "priority": "high",
+        "details": "1. Copy `src/memory/memory_system.py` directly from F@4's `fridays-at-four/src/simple_memory.py` without any modifications - maintain exact implementation\n2. Adapt only the imports to work with ILPA's project structure, but preserve all functionality\n3. Implement MemorySystem class with methods for storing and retrieving conversations following F@4's SimpleMemory class\n4. Create database schema for conversations table (user_id, agent_id, timestamp, role, content) referencing F@4's `supabase/migrations/` schema patterns\n5. Create database schema for memory table (user_id, agent_id, timestamp, content, source_type) based on F@4's memory table structure\n6. Implement buffer management for recent conversations (100-message rolling window) as in F@4's simple_memory.py\n7. Use ONLY keyword-based search with .ilike() for memory retrieval - do NOT implement embeddings or vector search\n8. Follow F@4's exact implementation for text matching using simple SQL queries with .ilike() patterns\n9. Create integration points with the nightly summarizer for long-term memory processing following F@4 patterns\n10. Implement memory context injection for agent prompts using F@4's context formatting approach\n11. Add support for multi-agent architecture (different memory contexts for different agents)\n12. Create utility functions for memory serialization and deserialization from simple_memory.py\n13. Implement memory tagging system for better retrieval based on F@4's approach in simple_memory.py\n14. Add methods for memory importance scoring to prioritize critical information as in simple_memory.py\n15. Create documentation for memory system usage across different agents with F@4 reference examples\n16. Implement memory cleanup and maintenance routines following F@4 patterns in simple_memory.py\n<info added on 2025-06-29T04:44:39.785Z>\n17. Implement agent coordination patterns from F@4 research, including modular agent classes with clear domains and handoff mechanisms between agents\n18. Create a registry pattern for dynamic agent lookup and orchestration in the multi-agent architecture\n19. Set up rolling window buffer implementation with automatic pruning of messages beyond the 100-message limit\n20. Add SQL query optimization for the keyword search using Postgres GIN indexes on tsvector for efficient content searching\n21. Implement JWT-based authentication integration with the memory system to ensure proper user data isolation\n22. Create service account authentication for scheduled memory maintenance tasks (nightly summarizer)\n23. Add CORS configuration to allow memory system integration with the Vercel frontend\n24. Implement example code for agent handoff mechanisms similar to the provided pseudocode pattern\n25. Create a `/api/chat/search` endpoint that accepts keyword queries and returns matching messages from conversations\n</info added on 2025-06-29T04:44:39.785Z>",
+        "testStrategy": "1. Unit test MemorySystem class methods for storing and retrieving conversations against F@4's implementation\n2. Test buffer management with more than 100 messages to verify rolling window matches F@4 behavior\n3. Verify correct integration with nightly summarizer using F@4's summarization workflow\n4. Test keyword search functionality with .ilike() queries to ensure exact match with F@4's implementation\n5. Verify NO embeddings or vector search is implemented - only text matching with SQL .ilike()\n6. Validate multi-agent memory isolation (agent A cannot access agent B's memories)\n7. Benchmark memory retrieval performance with large datasets compared to F@4 benchmarks\n8. Test memory context injection in agent prompts using F@4's context formatting\n9. Verify memory tagging and importance scoring matches F@4's simple_memory.py implementation\n10. Test memory serialization and deserialization against F@4 patterns in simple_memory.py\n11. Validate memory cleanup routines against F@4 maintenance procedures\n12. Integration test with Life Coach Agent and Domain Agents",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Implement Health Domain Agent",
+        "description": "Create the specialized Health domain agent for processing health-related text files and extracting health insights using F@4 agent patterns. For MVP, focus on simple text extraction from .txt and .md files only.",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "medium",
+        "details": "1. Create `src/agents/domain_agents/health_agent.py` file\n2. Implement HealthAgent class that inherits from the base DomainAgent class\n3. Implement simple text extraction functionality for health-related files\n   - Focus only on .txt and .md files for MVP\n   - Utilize shared code with other domain agents (90% overlap)\n4. Store extracted text in health_data table in the database\n5. Implement basic NLP techniques for health data extraction:\n   - Simple keyword identification for health terms\n   - Basic pattern matching for common health metrics\n6. Create basic prompt templates for health insights generation\n7. Implement simple confidence scoring for health insights\n8. Add methods for generating basic health summaries\n9. Skip complex file parsing (CSV/PDF) for MVP\n10. Add basic privacy handling for health data\n11. Implement minimal integration with the Life Coach Agent\n12. Add documentation for the simplified MVP approach\n<info added on 2025-06-29T04:45:05.016Z>\n12. Implement the following shared code pattern for domain agents:\n   - Create a base `DomainAgent` class in `src/agents/domain_agents/base_agent.py`\n   - Implement file validation, reading, and text extraction for .txt and .md files in the base class\n   - Add standardized confidence scoring based on keyword matches\n   - Abstract database storage logic in the base class\n\n13. For the HealthAgent implementation:\n   - Define health-specific keywords (exercise, diet, sleep, stress, medication)\n   - Override the `extract_insights(text)` method with simple keyword matching\n   - Set database target table to 'health_data'\n   - Implement confidence scoring as: confidence = min(matched_keywords / total_keywords, 1.0)\n\n14. Follow the example class structure:\n```python\nclass HealthAgent(DomainAgent):\n    def __init__(self):\n        keywords = ['exercise', 'diet', 'sleep', 'stress', 'medication']\n        super().__init__('health_data', keywords)\n\n    def extract_insights(self, text):\n        matches = [kw for kw in self.keywords if kw in text.lower()]\n        confidence = min(len(matches) / len(self.keywords), 1.0)\n        return {'matched_keywords': matches}, confidence\n```\n\n15. Add unit tests focusing on:\n   - Correct file type handling\n   - Accurate keyword extraction and confidence scoring\n   - Proper storage in the health_data database table\n</info added on 2025-06-29T04:45:05.016Z>",
+        "testStrategy": "1. Unit test HealthAgent class methods with sample text data\n2. Test basic text extraction from .txt and .md health-related files only\n3. Verify storage of extracted text in health_data table\n4. Test basic keyword identification for health terms\n5. Validate simple confidence scoring mechanism\n6. Test basic health summary generation\n7. Verify proper handling of extracted health text data\n8. Test minimal integration with Life Coach Agent\n9. Validate basic privacy protections for health information\n10. Perform end-to-end testing with simple health text samples (.txt and .md)\n11. Test error handling for malformed text files",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Implement Business Domain Agent",
+        "description": "Create the simplified Business domain agent for MVP that processes business-related text files and extracts basic business information using shared domain agent patterns.",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "medium",
+        "details": "1. Create `src/agents/domain_agents/business_agent.py`\n2. Implement BusinessAgent class inheriting from the base DomainAgent\n3. Reuse common code (90%) from other domain agents for text extraction\n4. For MVP, focus only on basic text extraction from uploaded files:\n   - Extract plain text content from .txt and .md files only\n   - Store extracted text in business_data table\n5. Implement simple business-specific prompt templates for basic information extraction\n6. Create database schema for business_data table\n7. Add minimal methods for retrieving stored business information\n8. Implement basic integration with the Life Coach Agent\n9. Add proper error handling for file processing failures\n10. Skip complex file parsing (financial analysis, project tracking, etc.) for MVP\n11. Follow the same implementation pattern as the Health Agent",
+        "testStrategy": "1. Unit test BusinessAgent class methods\n2. Test basic text extraction with sample .txt and .md business documents\n3. Verify correct storage of extracted text in the business_data table\n4. Test integration with Life Coach Agent using mock conversations\n5. Verify error handling with various file types including unsupported formats\n6. Ensure code reuse from other domain agents is working properly\n7. Test end-to-end workflow from file upload to text storage\n8. Validate that the agent correctly identifies itself as handling business domain\n9. Test performance with various file sizes\n10. Verify the agent properly connects to the database",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Implement Creative Domain Agent",
+        "description": "Create the specialized Creative domain agent for processing creative files (writing samples, design work, creative project docs) and extracting basic text insights using the shared domain agent pattern for the MVP.",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "medium",
+        "details": "1. Create `src/agents/domain_agents/creative_agent.py`\n2. Implement CreativeAgent class inheriting from the base DomainAgent class\n3. Reuse the shared text extraction code from Health/Business agents (90% code reuse)\n4. Focus only on basic text extraction from creative files for MVP:\n   - Simple text extraction from .txt and .md files only\n   - Skip complex parsing for MVP\n5. Implement simple prompt templates for the LLM to extract basic creative insights\n6. Use the standard confidence scoring system shared with other domain agents\n7. Store insights in the creative_data table using the common schema\n8. Add basic methods for generating simple creative reports\n9. Implement file type validation limited to .txt and .md files only\n10. Leverage shared error handling for basic file processing issues",
+        "testStrategy": "1. Unit test CreativeAgent class methods\n2. Test basic text extraction from creative file types:\n   - Limited to .txt and .md files only\n   - Writing samples (short stories, essays)\n   - Project documentation (creative briefs)\n3. Verify correct extraction of basic text insights\n4. Validate standard confidence scoring mechanism\n5. Test storage and retrieval of insights using the creative_data table\n6. Verify basic report generation\n7. Test error handling with .txt and .md file types\n8. Validate integration with the file upload system\n9. Test end-to-end workflow from file upload to basic insight extraction\n10. Ensure proper code reuse from Health/Business domain agents",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Implement Travel Domain Agent",
+        "description": "Create the simplified Travel domain agent for processing travel-related text content and extracting basic travel insights using F@4 agent patterns for the MVP.",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "medium",
+        "details": "1. Create `src/agents/domain_agents/travel_agent.py` file\n2. Implement TravelAgent class inheriting from the base DomainAgent class\n3. Reuse common code from other domain agents (90% shared functionality)\n4. Focus on basic text extraction only for MVP:\n   - Simple extraction of travel destinations from text\n   - Basic date identification from travel text\n   - Simple identification of accommodation mentions\n5. Implement minimal travel-specific NLP techniques:\n   - Basic named entity recognition for locations\n   - Simple date extraction\n6. Create basic prompt templates for the LLM to extract travel insights\n7. Use the standard confidence scoring mechanism shared with other domain agents\n8. Utilize the existing database schema patterns, storing data in the travel_data table\n9. Implement standard error handling shared with other domain agents\n10. Add basic logging consistent with other domain agents\n11. Support only .txt and .md file formats for the MVP\n12. Skip complex parsing techniques for the MVP version",
+        "testStrategy": "1. Unit test TravelAgent class methods with mock text data\n2. Test basic text extraction with simple travel-related content\n3. Verify named entity recognition for basic travel entities (locations, dates)\n4. Test database storage of extracted travel insights in the travel_data table\n5. Validate the shared confidence scoring mechanism\n6. Test error handling with sample travel text\n7. Perform integration testing with the file upload system\n8. Verify correct handling of .txt and .md file formats\n9. Confirm the agent skips complex parsing as intended for MVP",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Implement Relationships Domain Agent",
+        "description": "Create the specialized Relationships domain agent for processing relationship files (communication logs, social media exports, relationship journals) and extracting basic relationship insights using F@4 agent patterns, following the simplified MVP approach.",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "medium",
+        "details": "1. Create `src/agents/domain_agents/relationships_agent.py` file\n2. Implement RelationshipsAgent class inheriting from the base DomainAgent class\n3. Reuse the common text extraction code from other domain agents (90% shared code)\n4. Focus on basic text extraction from relationship files for MVP:\n   - Only process .txt and .md files\n   - Skip complex parsing of structured data formats\n   - Extract text from plain text relationship files only\n5. Implement simplified prompt templates for the LLM to extract basic relationship insights\n6. Add minimal functionality to identify key relationships\n7. Create methods to generate simple relationship summaries\n8. Implement basic error handling for relationship data\n9. Ensure extracted insights are stored in the relationships_data table\n10. Implement methods to retrieve and format relationship insights for the Life Coach Agent",
+        "testStrategy": "1. Create unit tests for the RelationshipsAgent class and its methods\n2. Test basic text extraction from sample relationship files:\n   - Only test with .txt and .md files\n   - Use simple plain text samples for testing\n3. Verify correct storage of relationship insights in the relationships_data table\n4. Test integration with the Life Coach Agent for utilizing relationship insights\n5. Verify error handling with invalid relationship files\n6. Ensure the agent follows the same patterns as other domain agents",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Implement Core API Endpoints",
+        "description": "Create essential API endpoints for chat, authentication, and health checks using F@4 FastAPI patterns from the fridays-at-four repository with streaming support and proper error handling. Ensure compatibility with Heroku deployment and Vercel-hosted frontend.",
+        "status": "pending",
+        "dependencies": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "priority": "high",
+        "details": "1. Create `src/api/routers/` directory structure for organizing endpoints following F@4 patterns\n2. Implement `/api/chat` endpoints:\n   - POST `/api/chat/message` for sending messages with streaming support\n   - GET `/api/chat/history` for retrieving conversation history\n   - DELETE `/api/chat/conversation/{id}` for deleting conversations\n   - Implement simple keyword search functionality based on patterns from simple_memory.py\n3. Implement `/api/auth` endpoints:\n   - POST `/api/auth/register` for user registration\n   - POST `/api/auth/login` for user authentication\n   - POST `/api/auth/refresh` for token refresh\n   - POST `/api/auth/logout` for user logout\n4. Implement health check endpoint at `/api/health` for monitoring and Heroku deployment verification\n5. Add proper request validation using Pydantic models for all endpoints\n6. Implement streaming response handling for chat endpoints using FastAPI's StreamingResponse\n7. Create comprehensive error handling middleware:\n   - Implement custom exception classes for different error types\n   - Create exception handlers for returning appropriate HTTP status codes\n   - Add detailed error messages in development mode\n8. Implement rate limiting for all endpoints to prevent abuse\n9. Add proper logging for all API requests and responses\n10. Ensure all endpoints are properly authenticated using the authentication middleware\n11. Configure CORS specifically for Vercel-hosted frontend integration:\n    - Allow specific origins from Vercel deployment\n    - Handle preflight requests properly\n    - Enable credentials for authenticated requests",
+        "testStrategy": "1. Write unit tests for each endpoint using pytest and FastAPI's TestClient\n2. Test chat endpoints with both normal and streaming responses\n3. Verify authentication endpoints with valid and invalid credentials\n4. Test health check endpoint returns appropriate status\n5. Validate request validation by sending malformed requests\n6. Test error handling by triggering various error conditions\n7. Verify rate limiting by sending multiple requests in quick succession\n8. Test CORS configuration with requests from Vercel frontend origin\n9. Perform load testing to ensure endpoints can handle expected traffic\n10. Create integration tests that verify the complete request/response cycle\n11. Test streaming functionality with various client connection scenarios (slow connections, disconnects)\n12. Test simple keyword search functionality with various query patterns\n13. Verify API compatibility with Heroku deployment environment",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Implement Planning & Domain API Endpoints",
+        "description": "Create API endpoints for weekly planning sessions, domain agent interactions, and file upload processing with proper validation and rate limiting.",
+        "details": "1. Create `src/api/routers/planning.py` for planning session endpoints:\n   - Implement `/api/planning/start` endpoint to initiate a new planning session\n   - Create `/api/planning/message` endpoint for interactive planning dialogue\n   - Add `/api/planning/finalize` endpoint to complete and save plans\n   - Implement `/api/planning/history` to retrieve past planning sessions\n\n2. Create `src/api/routers/domains.py` for domain agent interactions:\n   - Implement `/api/domains/health` endpoint for health domain insights\n   - Create `/api/domains/business` endpoint for business domain insights\n   - Add `/api/domains/creative` endpoint for creative domain insights\n   - Implement `/api/domains/travel` endpoint for travel domain insights\n   - Create `/api/domains/relationships` endpoint for relationship domain insights\n   - Add `/api/domains/reports` endpoint to generate domain-specific reports\n\n3. Enhance `src/api/routers/uploads.py` with additional functionality:\n   - Implement file validation middleware (size, type, content)\n   - Add rate limiting using FastAPI middleware\n   - Create endpoint for checking upload processing status\n   - Implement endpoint for retrieving processed file insights\n\n4. Implement request validation using Pydantic models:\n   - Create `src/api/models/planning.py` for planning request/response models\n   - Implement `src/api/models/domains.py` for domain request/response models\n   - Add validation for all request parameters and payload structures\n\n5. Add authentication and security features:\n   - Ensure all endpoints require valid authentication\n   - Implement user-specific data access controls\n   - Add logging for all API requests for auditing purposes\n\n6. Implement error handling and response standardization:\n   - Create consistent error response format\n   - Add appropriate HTTP status codes for different scenarios\n   - Implement detailed error messages for debugging\n\n7. Add documentation using FastAPI's built-in Swagger UI:\n   - Document all endpoints with clear descriptions\n   - Add example requests and responses\n   - Document authentication requirements",
+        "testStrategy": "1. Unit test each API endpoint:\n   - Test planning endpoints with mock WeeklyPlanningAgent responses\n   - Verify domain endpoints correctly route to appropriate domain agents\n   - Test file upload enhancements with various file types and sizes\n\n2. Test authentication and authorization:\n   - Verify endpoints reject unauthenticated requests\n   - Test user-specific data access controls\n   - Ensure rate limiting correctly restricts excessive requests\n\n3. Test request validation:\n   - Send invalid requests to each endpoint and verify appropriate error responses\n   - Test boundary conditions (empty payloads, maximum sizes, etc.)\n   - Verify all required fields are properly validated\n\n4. Integration testing:\n   - Test planning workflow from start to finalization\n   - Verify domain insights are correctly retrieved from domain agents\n   - Test file upload processing end-to-end\n\n5. Performance testing:\n   - Measure response times under various loads\n   - Test rate limiting behavior under high traffic\n   - Verify system stability with concurrent requests\n\n6. Documentation verification:\n   - Ensure all endpoints are properly documented\n   - Verify example requests work as documented\n   - Test API through Swagger UI to confirm functionality",
+        "status": "pending",
+        "dependencies": [
+          4,
+          7,
+          8,
+          10
+        ],
+        "priority": "medium",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-29T02:24:03.227Z",
+      "updated": "2025-06-29T04:06:05.724Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

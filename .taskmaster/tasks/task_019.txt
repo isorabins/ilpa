@@ -1,0 +1,42 @@
+# Task ID: 19
+# Title: Implement Creative Domain Agent
+# Status: pending
+# Dependencies: 2, 3
+# Priority: medium
+# Description: Create the specialized Creative domain agent for processing creative files (writing samples, design work, creative project docs) and extracting creative insights using F@4 agent patterns.
+# Details:
+1. Create `src/agents/domain_agents/creative_agent.py`
+2. Implement CreativeAgent class inheriting from the base DomainAgent class
+3. Define specialized methods for processing different creative file types:
+   - Text analysis for writing samples (tone, style, themes)
+   - Image processing for design work (color schemes, layout patterns)
+   - Document analysis for creative project docs (milestones, concepts)
+4. Implement NLP techniques specific to creative content:
+   - Sentiment analysis for emotional tone
+   - Topic modeling to identify themes and concepts
+   - Style classification for writing samples
+5. Create specialized prompt templates for the LLM to extract creative insights
+6. Implement confidence scoring system for creative insights
+7. Design schema for storing creative insights in the database:
+   - Creative themes
+   - Style characteristics
+   - Emotional patterns
+   - Project concepts and milestones
+8. Add methods for generating creative reports and summaries
+9. Implement file type validation specific to creative domains (.doc, .pdf, .jpg, .png, etc.)
+10. Create error handling for malformed or incompatible creative files
+
+# Test Strategy:
+1. Unit test CreativeAgent class methods
+2. Test processing of various creative file types:
+   - Writing samples (short stories, essays, poetry)
+   - Design files (mockups, sketches)
+   - Project documentation (creative briefs, storyboards)
+3. Verify correct extraction of creative insights from each file type
+4. Validate confidence scoring mechanism with known sample files
+5. Test storage and retrieval of creative insights from the database
+6. Verify creative report generation with different insight combinations
+7. Test error handling with malformed or incompatible files
+8. Benchmark performance with large creative files
+9. Validate integration with the file upload system
+10. Test end-to-end workflow from file upload to insight extraction

@@ -1,0 +1,89 @@
+# Task ID: 2
+# Title: Implement Base Agent and LLM Router
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create the base agent class and implement the LLM router following F@4 patterns.
+# Details:
+1. Create `src/agents/base_agent.py`
+2. Implement BaseAgent class with LLM routing logic
+3. Use Anthropic's Claude API as primary LLM (claude-2 model)
+4. Implement OpenAI fallback using gpt-3.5-turbo
+5. Copy F@4's LLM router pattern exactly
+6. Implement rate limiting and error handling
+7. Use `aiohttp` for asynchronous API calls
+8. Implement streaming response handling
+
+Reference the following F@4 files for implementation patterns:
+- `fridays-at-four/src/main.py` for FastAPI integration patterns
+- `fridays-at-four/src/simple_memory.py` for agent patterns and state management
+- `fridays-at-four/src/claude_client_simple.py` for Claude API integration
+- `fridays-at-four/src/openai_client.py` for OpenAI integration
+- `fridays-at-four/src/streaming.py` for streaming response patterns
+- `fridays-at-four/src/llm_router.py` for LLM routing patterns
+
+Refer to the F@4 Code Reference Guide and research-validated best practices guide for additional implementation details.
+
+# Test Strategy:
+1. Unit test BaseAgent class
+2. Test LLM router with mock API responses
+3. Verify fallback mechanism works when primary LLM fails
+4. Test rate limiting behavior
+5. Validate streaming responses
+6. Compare implementation against F@4 reference code to ensure pattern compliance
+
+# Subtasks:
+## 1. Project File Structure Creation [pending]
+### Dependencies: None
+### Description: Set up the initial project directory and create all necessary files for agent, provider integrations, routing, and utilities.
+### Details:
+Define folders for core logic, provider integrations (Anthropic, OpenAI), routing, rate limiting, error handling, and streaming. Create placeholder files for each component. Reference the F@4 file structure as a guide, particularly the organization in `fridays-at-four/src/`.
+
+## 2. Base Agent Class Implementation [pending]
+### Dependencies: 2.1
+### Description: Develop a base class that defines the interface and shared logic for all LLM agent providers.
+### Details:
+Include abstract methods for sending requests, handling responses, and error management. Ensure extensibility for multiple providers. Reference `fridays-at-four/src/simple_memory.py` for agent patterns and state management approaches.
+
+## 3. LLM Routing Logic Development [pending]
+### Dependencies: 2.2
+### Description: Implement logic to route requests to the appropriate LLM provider based on configuration, availability, or fallback criteria.
+### Details:
+Design a router that can select between Anthropic and OpenAI, with support for fallback and provider prioritization. Study the routing patterns in F@4's codebase, particularly in `fridays-at-four/src/llm_router.py` which contains the specific implementation patterns for directing requests between different LLM providers.
+
+## 4. Anthropic Provider Integration [pending]
+### Dependencies: 2.2
+### Description: Integrate the Anthropic API as a concrete implementation of the base agent class.
+### Details:
+Implement async API calls, request formatting, and response parsing specific to Anthropic's API. Reference `fridays-at-four/src/claude_client_simple.py` for implementation patterns, especially authentication, request formatting, and response handling.
+
+## 5. OpenAI Provider Fallback Integration [pending]
+### Dependencies: 2.3, 2.4
+### Description: Integrate the OpenAI API as a fallback provider, ensuring seamless failover from Anthropic.
+### Details:
+Implement OpenAI-specific logic and ensure the router can switch to OpenAI if Anthropic fails or is unavailable. Reference `fridays-at-four/src/openai_client.py` for implementation patterns, particularly how the API is called and responses are processed.
+
+## 6. Rate Limiting Mechanism Implementation [pending]
+### Dependencies: 2.3, 2.4, 2.5
+### Description: Develop a rate limiting system to control API usage for both Anthropic and OpenAI providers.
+### Details:
+Implement per-provider and global rate limits, with logic to queue or reject requests as needed. Study how F@4 handles rate limiting in their API client implementations. Refer to the research-validated best practices guide for rate limiting strategies.
+
+## 7. Error Handling and Recovery Logic [pending]
+### Dependencies: 2.5
+### Description: Implement robust error handling for API failures, timeouts, and invalid responses, including retry and fallback strategies.
+### Details:
+Ensure errors are logged, retried where appropriate, and escalated to fallback providers if necessary. Reference error handling patterns in `fridays-at-four/src/claude_client_simple.py` and `fridays-at-four/src/openai_client.py`.
+
+## 8. Asynchronous API Call Support [pending]
+### Dependencies: 2.4, 2.5, 2.7
+### Description: Ensure all API interactions are fully asynchronous to maximize throughput and responsiveness.
+### Details:
+Refactor provider integrations and routing logic to use async/await patterns and support concurrent requests. Study how F@4 implements asynchronous API calls in their client code, particularly with `aiohttp`.
+
+## 9. Streaming Response Handling [pending]
+### Dependencies: None
+### Description: Implement support for streaming LLM responses to clients as data becomes available.
+### Details:
+Design logic to process and forward partial responses from providers, ensuring smooth client-side streaming. Reference `fridays-at-four/src/streaming.py` for streaming implementation patterns and `fridays-at-four/src/main.py` for how streaming is integrated with FastAPI.
+

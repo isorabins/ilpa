@@ -1,0 +1,968 @@
+# Multi-Agent Life Planning System - PRD
+
+## Executive Summary
+
+**Project Name:** Integrated Life Planning Assistant (ILPA)
+**Timeline:** 1 week for Phase 1 production-ready MVP
+**Tech Stack:** **Heroku (FastAPI backend)** + **Vercel (React frontend)**, Supabase, Claude Agents with OpenAI fallback
+**Development Approach:** Test-driven, leverage existing F@4 codebase patterns, clean and minimal
+
+### The Core Concept: Interactive Life Coaching Through AI
+
+This system fundamentally reimagines personal life planning by moving beyond static productivity tools to create an **interactive coaching experience** where specialized AI agents work together to provide integrated life guidance. The user has natural conversations with a Life Coach Agent throughout the week, then collaborates with a Weekly Planning Agent to create integrated plans using insights from domain-specific agents and uploaded artifacts.
+
+**The Revolutionary Insight:** Most productivity and planning tools treat life areas as separate silos—health apps, business apps, creative apps, finance apps. This system recognizes that these areas actually support and influence each other when planned integratively. A person building a business while maintaining health goals and creative output needs planning that understands how these domains connect and reinforce each other.
+
+***
+IMPORTANT: we are using the Fridays at Four front and backend
+for much of the code. Those are working repos, so whenever possible
+use code from those projects rather than re-writing your own ***
+
+### Phase 1 Architecture: Proven Patterns, Clear Separation
+
+**Life Coach Agent:**
+- Single point of contact for daily conversations
+- Natural conversation interface about any life topic
+- Persistent memory using F@4's proven conversation + memory table pattern
+- SQL search tools to query domain tables when specifically asked
+- Note: In Phase 1, Life Coach won't have access to domain data to keep it simple
+- **Sample Prompt Direction:** "You are a supportive life coach who helps users reflect on their daily experiences, challenges, and growth. You remember past conversations and provide continuity..."
+
+**Domain Agents (5 specialized):**
+- Health Agent, Business Agent, Creative Agent, Travel Agent, Relationships Agent
+- Process uploaded files and extract domain-specific insights
+- Generate domain reports for Weekly Planning Agent
+- Follow Claude agent best practices: simple, focused, stateless design
+- Work entirely in background - users never interact with them directly
+
+**Example File Types by Domain:**
+- **Health:** Daily journal entries, workout logs, medical notes, mood tracking, sleep logs, nutrition diaries
+- **Business:** Meeting notes, project updates, revenue reports, strategy docs, client feedback, goal tracking
+- **Creative:** Writing drafts, project ideas, inspiration notes, progress logs, brainstorming sessions
+- **Travel:** Trip planning docs, location research, travel journals, itineraries, experience reflections
+- **Relationships:** Reflection notes, communication logs, social event planning, relationship insights
+
+**Domain Agent Summary Format:**
+Each domain agent delivers a structured weekly recommendation report:
+```json
+{
+  "domain": "health",
+  "week_of": "2024-01-15",
+  "overview": "Based on your uploads, here's what I recommend focusing on this week...",
+  "key_insights": [
+    "You've been consistently exercising 4x/week",
+    "Sleep quality improved when you meditated"
+  ],
+  "trends": [
+    "Energy levels correlate with morning routine consistency",
+    "Stress decreases with regular outdoor activities"
+  ],
+  "weekly_recommendations": [
+    "Continue morning meditation practice",
+    "Add one outdoor walk on low-energy days",
+    "Track water intake to maintain hydration"
+  ],
+  "priority_level": "high" // high/medium/low based on user's current focus
+}
+```
+
+**Weekly Planning Agent:**
+- Interactive coaching conversation for weekly planning
+- Reviews last week's plan completion status first
+- Pulls insights from: Life Coach conversations/memory + all Domain Agent summaries
+- Creates integrated weekly plans through collaborative dialogue
+- Saves finalized plans to weekly_plans table
+- 30-60 minute planning sessions (acceptable for personal use initially)
+- **Context Assembly Order:**
+  1. Previous week's plan and completion status
+  2. Life Coach conversation summary (last 2 weeks)
+  3. Domain agent recommendations (ordered by user's domain priorities)
+- **Sample Prompt Direction:** "Guide the user through creating an integrated weekly plan. Start by reviewing last week's accomplishments and challenges, then incorporate recommendations from all life domains..."
+
+**Memory Architecture (F@4 Pattern):**
+- **conversations table**: All interactions stored permanently
+- **memory table**: Short-term buffer with async background summarizations
+- **Nightly summarizer**: Processes conversations → long-term memory (never summary of summary)
+- **Memory table cleanup**: Deletes when hits 100 messages
+
+**File Upload System:**
+- User selects domain → routes to appropriate Domain Agent
+- Domain Agents process files and store insights in domain tables
+- Weekly Planning Agent accesses these insights during planning sessions
+
+### Why This Approach Works
+
+**For the User:**
+- **Natural daily conversations** - just talk to Life Coach about anything
+- **Intelligent domain organization** - Domain Agents automatically understand and categorize uploaded content
+- **Integrated weekly planning** - Weekly Planning Agent sees full picture across all life areas
+- **Collaborative plan creation** - user actively participates in creating plans they'll actually follow
+
+**For the Architecture:**
+- **Proven F@4 patterns** - conversation + memory system already battle-tested
+- **Clean separation of concerns** - each agent has one clear responsibility
+- **Phase 1 simplicity** - no complex domain extraction from conversations yet
+- **Phase 2 ready** - architecture supports adding conversation → domain extraction later
+
+---
+
+## Technology Stack - CORRECTED
+
+### Backend
+- **Framework:** FastAPI (Python)
+- **Database:** Supabase (PostgreSQL with async support)
+- **Authentication:** Copy F@4's JWT patterns from main.py
+- **AI Integration:** Claude 3.5 Sonnet/Haiku + OpenAI GPT-4 fallback
+- **Memory System:** Copy F@4's simple_memory.py (keyword search only, NO embeddings)
+- **Deployment:** **Heroku** (not Vercel)
+
+### Frontend  
+- **Framework:** Next.js 14 with React
+- **Styling:** Tailwind CSS + Copy F@4's UI components
+- **State Management:** React Context + Custom hooks
+- **Authentication:** Copy FAF_website auth components directly
+- **Deployment:** **Vercel**
+
+### Infrastructure
+- **File Storage:** Supabase Storage (text files only for MVP)
+- **Database:** Supabase (PostgreSQL with simple tables, NO vector columns)
+- **Memory Search:** Keyword-based with .ilike() queries only
+- **Real-time:** Not needed for MVP
+- **Monitoring:** Basic logging
+
+### Critical Technical Corrections
+- ❌ **Vercel for backend** → ✅ **Heroku for backend**
+- ❌ **Embeddings/vector search** → ✅ **Simple keyword search with .ilike()**
+- ❌ **"Supabase doesn't support async"** → ✅ **Supabase DOES support async**
+- ❌ **Complex file parsing** → ✅ **Text files only (.txt, .md)**
+- ❌ **Custom auth system** → ✅ **Copy F@4's auth directly**
+
+---
+
+## CRITICAL: Developer Setup Instructions (DO THIS FIRST!)
+
+Before writing ANY code, the developer MUST complete these setup steps to ensure they can work independently:
+
+## 🎯 **Pre-Flight Checklist (Complete BEFORE Day 1)**
+
+```bash
+# PRE-FLIGHT CHECKLIST - ALL ITEMS MUST BE CHECKED
+□ Both F@4 repos cloned into project directory (just for reference)
+□ Added F@4 repo folders to .gitignore
+□ Anthropic API key obtained and saved
+□ OpenAI API key obtained and saved
+□ Supabase project created with credentials saved
+□ Heroku CLI installed: `heroku --version` works
+□ Vercel CLI installed: `vercel --version` works
+□ Python 3.11+ installed
+□ Node.js 18+ installed
+□ Created .env file with all credentials
+□ Ran test_setup.py successfully (see below)
+```
+
+### **Project Structure**
+```
+ilpa/
+├── fridays-at-four/           # F@4 backend repo (for reference only)
+├── FAF_website/               # F@4 frontend repo (for reference only)
+├── backend/                   # Your ILPA backend
+├── frontend/                  # Your ILPA frontend
+└── .gitignore                 # Must include F@4 repos
+
+# .gitignore should include:
+fridays-at-four/
+FAF_website/
+.env
+__pycache__/
+node_modules/
+```
+
+## 🧪 **Setup Verification Script**
+
+Create and run this BEFORE starting development:
+
+```python
+# test_setup.py - Run this BEFORE starting development
+import os
+from anthropic import Anthropic
+import openai
+from supabase import create_client
+from dotenv import load_dotenv
+
+load_dotenv()
+
+def test_apis():
+    print("🧪 Testing API connections...\n")
+    
+    # Test Anthropic
+    try:
+        client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            messages=[{"role": "user", "content": "Say 'API working'"}],
+            max_tokens=10
+        )
+        print("✅ Anthropic API working")
+    except Exception as e:
+        print(f"❌ Anthropic API failed: {e}")
+        print("   Fix: Check ANTHROPIC_API_KEY in .env")
+    
+    # Test OpenAI
+    try:
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": "Say 'API working'"}],
+            max_tokens=10
+        )
+        print("✅ OpenAI API working")
+    except Exception as e:
+        print(f"❌ OpenAI API failed: {e}")
+        print("   Fix: Check OPENAI_API_KEY in .env")
+    
+    # Test Supabase
+    try:
+        supabase = create_client(
+            os.getenv("SUPABASE_URL"),
+            os.getenv("SUPABASE_ANON_KEY")
+        )
+        # Simple query to test connection
+        result = supabase.table('conversations').select("*").limit(1).execute()
+        print("✅ Supabase connection working")
+    except Exception as e:
+        print(f"❌ Supabase connection failed: {e}")
+        print("   Fix: Check SUPABASE_URL and SUPABASE_ANON_KEY in .env")
+    
+    print("\n✨ All tests complete!")
+
+if __name__ == "__main__":
+    test_apis()
+```
+
+## 📁 **Exact F@4 File Mapping**
+
+Copy these files EXACTLY with NO modifications:
+
+```bash
+# EXACT F@4 FILES TO COPY (with their new locations)
+F@4 File                                    → ILPA Location
+fridays-at-four/src/llm_router.py         → src/llm/router.py
+fridays-at-four/src/simple_memory.py      → src/memory/memory_manager.py
+fridays-at-four/src/claude_client_simple.py → src/llm/claude_client.py
+fridays-at-four/src/config.py             → src/config.py
+fridays-at-four/src/main.py               → (copy auth patterns only to src/auth/middleware.py)
+
+# Frontend files
+FAF_website/auth/*                         → frontend/auth/*
+FAF_website/hoc/withPrivateRoute.tsx      → frontend/hoc/withPrivateRoute.tsx
+FAF_website/hoc/withPublicRoute.tsx       → frontend/hoc/withPublicRoute.tsx
+FAF_website/components/ui/*                → frontend/components/ui/*
+FAF_website/hooks/useAuth.tsx              → frontend/hooks/useAuth.tsx
+```
+
+## ⚠️ **Known Gotchas & Solutions**
+
+### **Heroku Deployment Issues**
+```bash
+# Issue: "No web process running"
+# Solution: Create Procfile with EXACT content:
+echo 'web: uvicorn src.main:app --host 0.0.0.0 --port $PORT' > Procfile
+
+# Issue: "Application error"
+# Solution: Check logs
+heroku logs --tail
+
+# Issue: "Build failed"
+# Solution: Ensure requirements.txt includes all dependencies
+pip freeze > requirements.txt
+```
+
+### **Supabase Async Operations**
+```python
+# ❌ WRONG (common mistake)
+result = supabase.table('users').select('*').execute()
+
+# ✅ CORRECT (Supabase DOES support async)
+result = await supabase.table('users').select('*').execute()
+```
+
+### **F@4 Memory System Confusion**
+```python
+# ❌ WRONG (looking for complex search)
+from memory import semantic_search, create_embeddings
+
+# ✅ CORRECT (F@4 uses simple keyword search ONLY)
+results = await self.db.supabase.table('memories')\
+    .select('*')\
+    .eq('user_id', user_id)\
+    .ilike('content', f'%{keyword}%')\
+    .execute()
+```
+
+### **CORS Errors**
+```python
+# Add to src/main.py
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://your-app.vercel.app",  # Your Vercel domain
+        "http://localhost:3000"          # Local development
+    ],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+### **File Upload Limits**
+```python
+# Heroku has 30s timeout - implement file size check
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+
+if file.size > MAX_FILE_SIZE:
+    raise HTTPException(413, "File too large (max 10MB)")
+```
+
+## 🚀 **Deployment Commands (Copy-Paste Ready)**
+
+### **Backend Deployment to Heroku**
+```bash
+# 1. Create Heroku app
+cd ilpa-backend
+heroku create ilpa-backend
+
+# 2. Set environment variables
+heroku config:set ANTHROPIC_API_KEY=your_anthropic_key
+heroku config:set OPENAI_API_KEY=your_openai_key
+heroku config:set SUPABASE_URL=your_supabase_url
+heroku config:set SUPABASE_ANON_KEY=your_supabase_anon_key
+heroku config:set JWT_SECRET_KEY=your_jwt_secret
+
+# 3. Create Procfile (EXACT content)
+echo 'web: uvicorn src.main:app --host 0.0.0.0 --port $PORT' > Procfile
+
+# 4. Create requirements.txt
+pip freeze > requirements.txt
+
+# 5. Deploy
+git add .
+git commit -m "Initial backend deployment"
+git push heroku main
+
+# 6. Verify deployment
+heroku logs --tail
+# Look for: "Uvicorn running on http://0.0.0.0:xxxxx"
+```
+
+### **Frontend Deployment to Vercel**
+```bash
+# 1. Navigate to frontend
+cd ilpa-frontend
+
+# 2. Deploy to Vercel
+vercel --prod
+
+# 3. Follow prompts and set these env vars in Vercel dashboard:
+# NEXT_PUBLIC_API_URL = https://ilpa-backend.herokuapp.com
+# NEXT_PUBLIC_SUPABASE_URL = your_supabase_url
+# NEXT_PUBLIC_SUPABASE_ANON_KEY = your_supabase_anon_key
+```
+
+## ✅ **Deployment Verification Script**
+
+Run this after deployment to verify everything works:
+
+```python
+# verify_deployment.py - Run after deployment
+import requests
+import json
+
+def verify_deployment():
+    print("🔍 Verifying deployment...\n")
+    
+    # Check backend health
+    backend_url = "https://ilpa-backend.herokuapp.com/health"
+    try:
+        response = requests.get(backend_url, timeout=10)
+        if response.status_code == 200:
+            print("✅ Backend is healthy")
+            print(f"   Response: {response.json()}")
+        else:
+            print(f"❌ Backend returned {response.status_code}")
+    except Exception as e:
+        print(f"❌ Backend unreachable: {e}")
+        print("   Fix: Check Heroku logs with 'heroku logs --tail'")
+    
+    # Check frontend
+    frontend_url = "https://your-app.vercel.app"  # Replace with your URL
+    try:
+        response = requests.get(frontend_url, timeout=10)
+        if response.status_code == 200:
+            print("✅ Frontend is accessible")
+        else:
+            print(f"❌ Frontend returned {response.status_code}")
+    except Exception as e:
+        print(f"❌ Frontend unreachable: {e}")
+        print("   Fix: Check Vercel deployment dashboard")
+    
+    # Test backend API endpoint
+    api_test_url = f"{backend_url.replace('/health', '')}/api/chat"
+    try:
+        # This should return 401 without auth, which is correct
+        response = requests.post(api_test_url, json={"message": "test"})
+        if response.status_code == 401:
+            print("✅ API authentication is working (401 expected)")
+        else:
+            print(f"⚠️  API returned unexpected status: {response.status_code}")
+    except Exception as e:
+        print(f"❌ API endpoint unreachable: {e}")
+
+if __name__ == "__main__":
+    verify_deployment()
+```
+
+## 📋 **Daily Success Checkpoints**
+
+### **End of Day 1 Checkpoint**
+```bash
+□ F@4 code successfully copied and imports updated
+□ test_setup.py passes all checks
+□ Basic FastAPI app runs locally
+□ Can deploy "Hello World" to Heroku
+□ Database tables created in Supabase
+```
+
+### **End of Day 2 Checkpoint**
+```bash
+□ Life Coach Agent responds to messages
+□ Conversations saved to database
+□ Memory system stores and retrieves conversations
+□ Can query conversations by user_id
+```
+
+### **End of Day 3 Checkpoint**
+```bash
+□ All 5 domain agents created
+□ File upload endpoint works
+□ Text files processed successfully
+□ Insights stored in domain tables
+```
+
+### **End of Day 4 Checkpoint**
+```bash
+□ Planning session can start
+□ Domain summaries aggregated
+□ Planning conversation works
+□ Plans saved to database
+```
+
+### **End of Day 5 Checkpoint**
+```bash
+□ All 7 API endpoints working
+□ Authentication protects endpoints
+□ Error handling implemented
+□ Full backend workflow tested
+```
+
+### **End of Day 6 Checkpoint**
+```bash
+□ Frontend auth working
+□ Chat interface displays messages
+□ File upload UI works
+□ Planning interface functional
+```
+
+### **End of Day 7 Checkpoint**
+```bash
+□ Backend deployed to Heroku
+□ Frontend deployed to Vercel
+□ verify_deployment.py passes
+□ Complete workflow tested in production
+```
+
+## 🆘 **Emergency Fixes**
+
+### **If Heroku deployment fails:**
+```bash
+# Check Python version
+echo "python-3.11.0" > runtime.txt
+
+# Ensure all files are committed
+git status
+git add -A
+git commit -m "Fix deployment"
+git push heroku main
+```
+
+### **If Supabase connection fails:**
+```python
+# Test connection directly
+from supabase import create_client
+client = create_client(url, key)
+print(client.table('conversations').select('*').limit(1).execute())
+```
+
+### **If frontend can't reach backend:**
+```javascript
+// Check API URL in frontend
+console.log('API URL:', process.env.NEXT_PUBLIC_API_URL);
+
+// Should output: https://ilpa-backend.herokuapp.com
+// NOT: http://localhost:8000
+```
+
+## 🎯 **Final Success Criteria**
+
+Before calling the project complete, verify:
+
+1. **Can create a new user account**
+2. **Can have a conversation with Life Coach**
+3. **Can upload a text file to a domain**
+4. **Can start and complete a planning session**
+5. **Can view the finalized weekly plan**
+6. **All data properly isolated by user_id**
+7. **No errors in Heroku logs**
+8. **No errors in browser console**
+
+---
+
+## Developer Instructions & Philosophy
+
+### Master Developer Approach
+You are a senior full-stack developer who values:
+- **Speed through simplicity** - Reuse F@4 patterns aggressively, don't reinvent wheels
+- **Clean, readable code** - Every function should be obvious in purpose
+- **Test-first mentality** - Write failing tests, then make them pass
+- **Minimal viable features** - Build exactly what's needed for Phase 1, nothing more
+
+### Test-Driven Development Protocol
+
+**TDD Cycle for Every Feature:**
+1. **Red:** Write a failing test that describes the behavior you want
+2. **Green:** Write the minimal code to make the test pass
+3. **Refactor:** Clean up code while keeping tests green
+4. **Repeat:** Move to next smallest piece of functionality
+
+**Testing Rules:**
+- Every agent method gets a unit test before implementation
+- Every API endpoint gets an integration test
+- Every database operation includes user_id filtering validation
+- Mock LLM responses for consistent testing
+- Use real test database for integration tests
+- Test LLM router fallback behavior
+
+### Code Quality Standards
+
+**File Organization (F@4 Pattern):**
+```
+src/
+├── agents/
+│   ├── base_agent.py              # Abstract base class with LLM router
+│   ├── life_coach_agent.py        # Daily conversations + memory
+│   ├── weekly_planning_agent.py   # Interactive planning sessions
+│   ├── domain_agents/
+│   │   ├── health_agent.py        # Health file processing + insights
+│   │   ├── business_agent.py      # Business file processing + insights
+│   │   ├── creative_agent.py      # Creative file processing + insights
+│   │   ├── travel_agent.py        # Travel file processing + insights
+│   │   └── relationships_agent.py # Relationships file processing + insights
+│   └── nightly_summarizer.py     # Background memory processing
+├── api/
+│   ├── routers/
+│   │   ├── conversations.py       # Life Coach chat endpoints
+│   │   ├── uploads.py            # File upload to domain agents
+│   │   ├── planning.py           # Weekly planning session endpoints
+│   │   └── insights.py           # Domain data retrieval
+│   └── main.py                   # FastAPI app with CORS
+├── database/
+│   ├── models.py                 # Supabase table schemas
+│   ├── migrations/               # Database migrations
+│   └── client.py                 # Database client with user filtering
+├── llm/
+│   ├── router.py                 # LLM routing (F@4 pattern)
+│   └── prompts.py                # Agent prompts and templates
+├── memory/
+│   ├── conversation_manager.py   # F@4 conversation pattern
+│   ├── memory_manager.py         # F@4 memory pattern  
+│   └── summarizer.py             # Nightly background processing
+└── tests/
+    ├── unit/                     # Unit tests by module
+    ├── integration/              # Cross-system tests
+    └── fixtures/                 # Test data and mocks
+```
+
+**Code Style Rules:**
+- Functions do one thing well
+- No function longer than 20 lines
+- Clear variable names (`health_insights` not `hi`)
+- Type hints on all functions
+- **User ID filtering EVERYWHERE** - no data leakage between users
+- Comments explain "why", not "what"
+
+---
+
+## Technical Architecture
+
+### Database Schema (Phase 1 - F@4 + Domain Extensions)
+
+```sql
+-- User conversations (F@4 pattern)
+CREATE TABLE conversations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    agent_type TEXT NOT NULL DEFAULT 'life_coach', -- 'life_coach', 'weekly_planning'
+    message_type TEXT NOT NULL, -- 'user', 'assistant'
+    content TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT NOW(),
+    session_id TEXT, -- For grouping related messages
+    metadata JSONB DEFAULT '{}'
+);
+
+-- Short-term memory buffer (F@4 pattern)
+CREATE TABLE memory (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    agent_type TEXT NOT NULL DEFAULT 'life_coach',
+    content TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT NOW(),
+    message_count INTEGER DEFAULT 1,
+    session_id TEXT
+);
+
+-- Long-term memory summaries (F@4 pattern)
+CREATE TABLE memory_summaries (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    agent_type TEXT NOT NULL DEFAULT 'life_coach',
+    summary_content TEXT NOT NULL,
+    date_range_start DATE NOT NULL,
+    date_range_end DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Domain agent data tables (separate for each domain)
+CREATE TABLE health_data (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    source_type TEXT NOT NULL DEFAULT 'file_upload', -- Ready for Phase 2 'conversation_extract'
+    raw_content TEXT,
+    processed_insights JSONB,
+    confidence_score FLOAT DEFAULT 1.0, -- For weighing insights
+    week_of DATE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE business_data (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    source_type TEXT NOT NULL DEFAULT 'file_upload',
+    raw_content TEXT,
+    processed_insights JSONB,
+    confidence_score FLOAT DEFAULT 1.0,
+    week_of DATE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Similar tables for creative_data, travel_data, relationships_data
+
+-- Weekly planning sessions
+CREATE TABLE planning_sessions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    session_id TEXT NOT NULL UNIQUE,
+    week_of DATE NOT NULL,
+    status TEXT DEFAULT 'active', -- 'active', 'completed', 'abandoned'
+    opening_message TEXT,
+    created_at TIMESTAMP DEFAULT NOW(),
+    completed_at TIMESTAMP
+);
+
+-- Finalized weekly plans
+CREATE TABLE weekly_plans (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    week_of DATE NOT NULL,
+    session_id TEXT REFERENCES planning_sessions(session_id),
+    plan_content JSONB, -- {todos: [], priorities: [], insights: {}}
+    completion_data JSONB DEFAULT '{}', -- Track todo completions
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- File upload tracking
+CREATE TABLE uploaded_files (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    filename TEXT NOT NULL,
+    domain TEXT NOT NULL, -- 'health', 'business', etc.
+    file_size INTEGER,
+    processing_status TEXT DEFAULT 'pending',
+    processed_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- User preferences (manually populated initially)
+CREATE TABLE user_preferences (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL UNIQUE,
+    preferences JSONB DEFAULT '{}', -- {name: 'John', age: 35, profession: 'Software Engineer', communication_style: 'direct'}
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Indexes for performance with user filtering
+CREATE INDEX idx_conversations_user_agent ON conversations(user_id, agent_type, timestamp DESC);
+CREATE INDEX idx_memory_user_agent ON memory(user_id, agent_type, timestamp DESC);
+CREATE INDEX idx_health_data_user_week ON health_data(user_id, week_of);
+CREATE INDEX idx_business_data_user_week ON business_data(user_id, week_of);
+-- Similar indexes for other domain tables
+CREATE INDEX idx_planning_sessions_user ON planning_sessions(user_id, week_of);
+CREATE INDEX idx_weekly_plans_user ON weekly_plans(user_id, week_of);
+```
+
+### Agent Architecture (Claude Best Practices)
+
+**Base Agent Pattern:**
+Follow Claude agent best practices - simple, focused, stateless design. Each agent should have a single clear responsibility. Use the F@4 LLM router pattern for all agents.
+
+**Life Coach Agent (Daily Conversations):**
+- Handles daily conversations with memory context
+- Uses F@4's SimpleMemory pattern exactly
+- Stores all conversations in both conversations and memory tables
+- Does NOT access domain data in Phase 1 (simplicity)
+- System prompt focuses on supportive, reflective conversation
+
+**Domain Agents (File Processing Specialists):**
+Each domain agent (Health, Business, Creative, Travel, Relationships):
+- Processes uploaded files for their specific domain
+- Extracts structured insights and stores as JSON
+- Generates domain reports when requested by Weekly Planning Agent
+- Works entirely in background - no user interaction
+- Adds confidence scores to insights for future relevance scoring
+
+**Weekly Planning Agent (Interactive Coaching):**
+- Starts planning sessions with context from all sources
+- Receives summaries from domain agents (not raw data)
+- Receives Life Coach conversation summaries
+- Facilitates interactive planning conversation
+- Saves finalized plans to database
+- Uses collaborative, coaching-oriented prompts
+
+### API Layer (FastAPI on Vercel)
+
+**Core Endpoints with User Security:**
+Copy F@4's authentication pattern exactly. Every endpoint must validate user_id from JWT token.
+
+**Required Endpoints:**
+- `/api/chat` - Daily conversation with Life Coach
+- `/api/upload` - File upload to specific domain
+- `/api/planning/start` - Begin weekly planning session
+- `/api/planning/{session_id}/message` - Continue planning conversation
+- `/api/planning/{session_id}/finalize` - Save completed plan
+- `/api/plans/{week_of}` - Retrieve weekly plan
+- `/api/plans/{plan_id}/todos/{todo_index}` - Update todo completion
+
+### Memory System (F@4 Pattern) - CORRECTED
+
+**Copy F@4's memory system exactly:**
+- SimpleMemory class for conversation persistence (NO embeddings)
+- Simple keyword-based search with .ilike() queries only
+- 100-message rolling window in memory table
+- Never summarize summaries (prevent degradation)
+- **Heroku Scheduler** for nightly processing (not Vercel cron)
+
+### Frontend (React + F@4 Components)
+
+**Reuse F@4 Components:**
+- Chat interface for Life Coach conversations
+- Streaming message display
+- Authentication flow
+- User profile management
+
+**New Components (Keep Simple):**
+- File upload with domain selection dropdown
+- Weekly planning chat interface (reuse chat components)
+- Basic plan display showing todos and priorities
+- Simple navigation between Life Coach and Planning modes
+
+---
+
+## Development Timeline (7 Days - Phase 1)
+
+### Day 1: Foundation & LLM Infrastructure - CORRECTED
+**Pre-Day 1:** Complete all items in Pre-Flight Checklist above
+
+**Morning:**
+- [ ] Complete F@4 file copying per exact mapping
+- [ ] Set up project structure with backend/ and frontend/ directories
+- [ ] Create .env file and verify test_setup.py passes
+- [ ] Create initial FastAPI app and deploy "Hello World" to **Heroku**
+
+**Afternoon:**
+- [ ] Copy F@4 LLM router exactly → src/llm/router.py
+- [ ] Copy F@4 database client with user filtering → src/database/client.py
+- [ ] Copy F@4 authentication middleware → src/auth/middleware.py
+- [ ] Create initial database tables in Supabase
+
+**Success Criteria:** End of Day 1 Checkpoint passes (see Daily Success Checkpoints above)
+
+### Day 2: Life Coach Agent & Memory System
+**Morning:**
+- [ ] Copy F@4 SimpleMemory class exactly → src/memory/memory_manager.py
+- [ ] Implement LifeCoachAgent using F@4 chat patterns
+- [ ] Set up conversations table and test conversation storage
+
+**Afternoon:**
+- [ ] Copy F@4 nightly summarizer patterns
+- [ ] Set up **Heroku Scheduler** for summarization (not Vercel cron)
+- [ ] Test memory system with keyword search (.ilike())
+
+**Success Criteria:** End of Day 2 Checkpoint passes
+
+### Day 3: Domain Agents & File Processing
+**Morning:**
+- [ ] Create base domain agent class with shared code (90% reuse)
+- [ ] Implement HealthAgent with text file processing (.txt, .md only)
+- [ ] Create domain_data tables in Supabase
+
+**Afternoon:**
+- [ ] Implement remaining 4 domain agents (copy HealthAgent pattern)
+- [ ] Create file upload API endpoint with size limits
+- [ ] Test all 5 agents process text files and store insights
+
+**Success Criteria:** End of Day 3 Checkpoint passes
+
+### Day 4: Weekly Planning Agent
+**Morning:**
+- [ ] Create WeeklyPlanningAgent class
+- [ ] Implement domain summary aggregation
+- [ ] Create planning session tables in Supabase
+
+**Afternoon:**
+- [ ] Build interactive planning conversation flow
+- [ ] Implement plan finalization and storage
+- [ ] Test complete planning workflow with all domain inputs
+
+**Success Criteria:** End of Day 4 Checkpoint passes
+
+### Day 5: API Integration
+**Morning:**
+- [ ] Create all 7 FastAPI endpoints (not 23)
+- [ ] Connect agents to endpoints with proper auth
+- [ ] Add comprehensive error handling
+
+**Afternoon:**
+- [ ] Test full workflow: chat → upload → planning
+- [ ] Implement CORS for frontend connection
+- [ ] Test user_id isolation on all endpoints
+
+**Success Criteria:** End of Day 5 Checkpoint passes
+
+### Day 6: Frontend Development
+**Morning:**
+- [ ] Copy FAF_website auth components directly
+- [ ] Copy F@4 chat interface and adapt for Life Coach
+- [ ] Create file upload UI with domain selection
+
+**Afternoon:**
+- [ ] Create planning interface (adapt chat components)
+- [ ] Add basic navigation and plan display
+- [ ] Test frontend connects to Heroku backend
+
+**Success Criteria:** End of Day 6 Checkpoint passes
+
+### Day 7: Production Deployment
+**Morning:**
+- [ ] Deploy backend to **Heroku** using copy-paste commands
+- [ ] Deploy frontend to **Vercel** using copy-paste commands
+- [ ] Run verify_deployment.py script
+
+**Afternoon:**
+- [ ] Complete real workflow in production
+- [ ] Test all 8 Final Success Criteria
+- [ ] Fix any critical issues found
+
+**Success Criteria:** End of Day 7 Checkpoint passes + All Final Success Criteria met
+
+---
+
+## Phase 2 Planning (Future Enhancement)
+
+### Domain Extraction from Conversations
+- **Nightly Agent**: Extract domain insights from daily Life Coach conversations
+- **Enhanced Planning**: Weekly Planning Agent gets richer data from both files and conversations
+- **Pattern Recognition**: Cross-domain insights from natural conversation flow
+
+### Advanced Features
+- **Conversation Quality Scoring**: Track how well Life Coach understands user context
+- **Domain Report Intelligence**: More sophisticated analysis and trend detection
+- **Plan Effectiveness Tracking**: Monitor completion rates and adjust recommendations
+- **Multi-week Planning**: Monthly and quarterly planning capabilities
+- **Quick Planning Mode**: 5-minute plan generation for busy weeks
+- **Webhooks**: Real-time updates when domain data changes
+
+---
+
+## Success Metrics
+
+### MVP Feature List (Phase 1 Must-Haves)
+- [ ] File upload to 5 domains with insight extraction
+- [ ] Weekly planning sessions that aggregate domain agent recommendations
+- [ ] Daily Life Coach conversations with memory
+- [ ] Nightly conversation summarization
+- [ ] Basic authentication (from F@4)
+- [ ] Simple UI for chat and file uploads
+
+### Performance Requirements
+- **File processing time:** < 10 seconds per file
+- **Chat response time:** < 3 seconds for first token
+- **Planning session responsiveness:** < 3 seconds per response
+- **Maximum file size:** 10MB
+- **Context window management:** Handle gracefully (defer optimization to Phase 2)
+
+### Technical Success
+- [ ] All automated tests pass (copy F@4 test patterns)
+- [ ] LLM router fallback works reliably under rate limits
+- [ ] User data isolation verified (no cross-user data leakage)
+- [ ] Memory system handles conversation summarization effectively
+- [ ] File processing works for all 5 domain types
+- [ ] Planning sessions complete successfully start to finish
+
+### User Experience Success
+- [ ] **Daily conversations feel natural and contextual** - Life Coach remembers previous interactions
+- [ ] **File uploads provide valuable domain insights** - processed content enhances planning
+- [ ] **Weekly planning feels collaborative** - user actively participates in plan creation
+- [ ] **Plans are actionable and realistic** - based on real data about user's life
+- [ ] **Memory system works invisibly** - conversations have continuity without feeling overwhelming
+- [ ] **Domain organization is helpful** - insights are categorized usefully for planning
+
+### Production Readiness
+- [ ] **Authentication and security** - F@4's auth system works perfectly
+- [ ] **Performance acceptable** - responses within 3 seconds
+- [ ] **Error handling robust** - graceful degradation when services fail
+- [ ] **Deployment simple** - single command to deploy updates
+- [ ] **Personal use validated** - system handles real daily usage
+
+---
+
+## Risk Mitigation
+
+### High-Risk Areas
+1. **User data isolation** → Use F@4's proven user_id filtering everywhere
+2. **LLM router reliability** → Copy F@4's fallback system exactly
+3. **Memory system complexity** → Use F@4 patterns without modification
+4. **Agent coordination** → Keep agents simple and independent
+
+### Contingency Plans
+- **If domain agents struggle with file processing** → Store raw content, improve processing later
+- **If weekly planning is too complex** → Simplify to basic report aggregation
+- **If memory system has issues** → F@4's system is proven, debug integration
+- **If deployment issues on Vercel** → F@4 deploys successfully, follow same pattern
+
+### Phase 1 Scope Protection
+- **Focus on core workflow**: daily chat → file uploads → weekly planning
+- **Defer advanced features**: conversation domain extraction, webhooks, quick planning
+- **Leverage proven patterns**: F@4 code works in production, reuse aggressively
+- **Test with real use case**: personal daily use validates functionality
+
+**Key Philosophy:** Build something that works perfectly for daily personal use before expanding functionality. Every feature must prove its value through actual usage, and the system should feel natural and helpful from day one. Reuse F@4 code wherever possible - it's already production-tested.

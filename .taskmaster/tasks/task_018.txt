@@ -1,0 +1,40 @@
+# Task ID: 18
+# Title: Implement Business Domain Agent
+# Status: pending
+# Dependencies: 2, 3
+# Priority: medium
+# Description: Create the specialized Business domain agent for processing business-related files (financial records, project docs, meeting notes) and extracting business insights using F@4 agent patterns.
+# Details:
+1. Create `src/agents/domain_agents/business_agent.py`
+2. Implement BusinessAgent class inheriting from the base DomainAgent
+3. Define specialized file type handlers for:
+   - Financial records (CSV, Excel, PDF)
+   - Project documentation (Word, PDF, Markdown)
+   - Meeting notes (Text, Markdown, PDF)
+4. Implement NLP processing for business document analysis:
+   - Extract key financial metrics and trends
+   - Identify project milestones, deadlines, and dependencies
+   - Summarize meeting outcomes and action items
+5. Create specialized prompt templates for business insight extraction
+6. Implement confidence scoring for business insights based on source reliability
+7. Design a structured schema for storing business insights in the database
+8. Add methods for generating business reports and summaries
+9. Implement integration with the Life Coach Agent for incorporating business insights into planning sessions
+10. Create specialized visualization methods for financial data
+11. Add support for tracking business goals and KPIs over time
+12. Implement error handling for malformed or incomplete business documents
+
+# Test Strategy:
+1. Unit test BusinessAgent class methods
+2. Test file processing with sample business documents:
+   - Process sample financial spreadsheets and verify metric extraction
+   - Test project documentation parsing for milestone identification
+   - Validate meeting note summarization
+3. Verify correct storage of extracted business insights in the database
+4. Test confidence scoring mechanism with various quality levels of input
+5. Validate business report generation with expected formatting and content
+6. Test integration with Life Coach Agent using mock conversations
+7. Verify visualization methods with sample financial data
+8. Test error handling with malformed business documents
+9. Benchmark processing performance with large business documents
+10. Validate cross-referencing capabilities between different business document types

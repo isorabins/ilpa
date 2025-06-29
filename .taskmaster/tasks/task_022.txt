@@ -1,0 +1,41 @@
+# Task ID: 22
+# Title: Implement Core API Endpoints
+# Status: pending
+# Dependencies: 1, 2, 4, 5
+# Priority: high
+# Description: Create essential API endpoints for chat, authentication, and health checks using F@4 FastAPI patterns with streaming support and proper error handling.
+# Details:
+1. Create `src/api/routers/` directory structure for organizing endpoints
+2. Implement `/api/chat` endpoints:
+   - POST `/api/chat/message` for sending messages with streaming support
+   - GET `/api/chat/history` for retrieving conversation history
+   - DELETE `/api/chat/conversation/{id}` for deleting conversations
+3. Implement `/api/auth` endpoints:
+   - POST `/api/auth/register` for user registration
+   - POST `/api/auth/login` for user authentication
+   - POST `/api/auth/refresh` for token refresh
+   - POST `/api/auth/logout` for user logout
+4. Implement health check endpoint at `/api/health` for monitoring
+5. Add proper request validation using Pydantic models for all endpoints
+6. Implement streaming response handling for chat endpoints using FastAPI's StreamingResponse
+7. Create comprehensive error handling middleware:
+   - Implement custom exception classes for different error types
+   - Create exception handlers for returning appropriate HTTP status codes
+   - Add detailed error messages in development mode
+8. Implement rate limiting for all endpoints to prevent abuse
+9. Add proper logging for all API requests and responses
+10. Ensure all endpoints are properly authenticated using the authentication middleware
+11. Implement proper CORS configuration for frontend integration
+
+# Test Strategy:
+1. Write unit tests for each endpoint using pytest and FastAPI's TestClient
+2. Test chat endpoints with both normal and streaming responses
+3. Verify authentication endpoints with valid and invalid credentials
+4. Test health check endpoint returns appropriate status
+5. Validate request validation by sending malformed requests
+6. Test error handling by triggering various error conditions
+7. Verify rate limiting by sending multiple requests in quick succession
+8. Test CORS configuration with requests from different origins
+9. Perform load testing to ensure endpoints can handle expected traffic
+10. Create integration tests that verify the complete request/response cycle
+11. Test streaming functionality with various client connection scenarios (slow connections, disconnects)

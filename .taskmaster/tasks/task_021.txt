@@ -1,0 +1,43 @@
+# Task ID: 21
+# Title: Implement Relationships Domain Agent
+# Status: pending
+# Dependencies: 2, 3
+# Priority: medium
+# Description: Create the specialized Relationships domain agent for processing relationship files (communication logs, social media exports, relationship journals) and extracting relationship insights using F@4 agent patterns.
+# Details:
+1. Create `src/agents/domain_agents/relationships_agent.py` file
+2. Implement RelationshipsAgent class inheriting from the base DomainAgent class
+3. Define specialized methods for processing relationship-specific file types:
+   - Communication logs (text messages, call logs, emails)
+   - Social media exports (friend connections, interaction history)
+   - Relationship journals (text entries about relationships)
+4. Implement NLP techniques for relationship analysis:
+   - Entity recognition for identifying people and relationships
+   - Sentiment analysis to detect emotional patterns in communications
+   - Topic modeling to identify recurring themes in relationships
+   - Temporal analysis to track relationship changes over time
+5. Create specialized prompt templates for the LLM to extract relationship insights
+6. Implement methods to categorize relationships (family, friends, romantic, professional)
+7. Add functionality to identify relationship strengths, challenges, and patterns
+8. Create methods to generate relationship summaries and recommendations
+9. Implement confidence scoring for relationship insights
+10. Add proper error handling for malformed or incomplete relationship data
+11. Ensure all extracted insights are stored in the relationships domain table
+12. Implement methods to retrieve and format relationship insights for the Life Coach Agent
+
+# Test Strategy:
+1. Create unit tests for the RelationshipsAgent class and all its methods
+2. Test processing of various relationship file formats:
+   - Sample text message exports (iOS, Android formats)
+   - Email thread exports (Gmail, Outlook formats)
+   - Social media data exports (Facebook, LinkedIn formats)
+   - Journal entries in different formats (text, markdown, PDF)
+3. Verify correct entity extraction with test files containing known relationships
+4. Validate sentiment analysis accuracy with pre-labeled relationship communications
+5. Test relationship categorization with diverse relationship examples
+6. Verify temporal analysis with communications spanning different time periods
+7. Test confidence scoring with ambiguous relationship data
+8. Validate storage of relationship insights in the database
+9. Test integration with the Life Coach Agent for utilizing relationship insights
+10. Verify error handling with malformed or corrupted relationship files
+11. Benchmark processing performance with large relationship datasets
